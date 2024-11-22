@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "movies_watched",
+@Entity(tableName = "watchlist",
         foreignKeys = {
                 @ForeignKey(entity = User.class,
-                        parentColumns = "user_id",
+                        parentColumns = "id",
                         childColumns = "user_id",
                         onDelete = CASCADE),
                 @ForeignKey(entity = Movie.class,
@@ -18,7 +18,7 @@ import static androidx.room.ForeignKey.CASCADE;
                         childColumns = "movie_id",
                         onDelete = CASCADE)
         })
-public class MoviesWatched {
+public class Watchlist {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -30,26 +30,10 @@ public class MoviesWatched {
     @ColumnInfo(name = "movie_id")
     private Integer movieId;
 
-    @ColumnInfo(name = "watch_date")
-    private String watchDate;
+    @ColumnInfo(name = "added_date")
+    private String addedDate;
 
-    public MoviesWatched() {
-    }
-
-    public String getWatchDate() {
-        return watchDate;
-    }
-
-    public void setWatchDate(String watchDate) {
-        this.watchDate = watchDate;
-    }
-
-    public Integer getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(Integer movieId) {
-        this.movieId = movieId;
+    public Watchlist() {
     }
 
     public Integer getUserId() {
@@ -60,19 +44,26 @@ public class MoviesWatched {
         this.userId = userId;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getMovieId() {
+        return movieId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
-    public MoviesWatched(Integer userId, Integer movieId, String watchDate) {
+    public String getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(String addedDate) {
+        this.addedDate = addedDate;
+    }
+
+    public Watchlist(Integer userId, Integer movieId, String addedDate) {
         this.userId = userId;
         this.movieId = movieId;
-        this.watchDate = watchDate;
+        this.addedDate = addedDate;
     }
-
 
 }
