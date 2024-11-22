@@ -1,0 +1,99 @@
+com.example.reviewmate
+|
+├── login
+│   ├── LoginFragment.java
+│   ├── LoginViewModel.java
+│   ├── RegisterFragment.java
+│   └── RegisterViewModel.java
+│
+├── add
+│   ├── AddMovieFragment.java
+│   ├── AddReviewFragment.java
+│   ├── AddWatchlistFragment.java
+│   └── AddEntityViewModel.java
+│
+├── browse
+│   ├── BrowseFragment.java
+│   ├── MovieListFragment.java
+│   └── BrowseViewModel.java
+│
+├── movie
+│   ├── Movie.java
+│   ├── MovieDAO.java
+│   ├── MovieRepository.java
+│   └── MovieDetailsFragment.java
+│
+├── converters
+│   └── Converters.java
+│
+├── data
+│   ├── MovieRoomDatabase.java
+│   ├── UserRepository.java
+│   ├── WatchlistRepository.java
+│   ├── ActorRepository.java
+│   ├── DirectorRepository.java
+│   └── ReviewRepository.java
+│
+├── database
+│   ├── MovieRoomDatabase.java
+│   └── DatabaseCallback.java
+│
+├── dao
+│   ├── ActorDAO.java
+│   ├── DirectorDAO.java
+│   ├── MovieDAO.java
+│   ├── MoviesWatchedDAO.java
+│   ├── ReviewsDAO.java
+│   ├── UserinfoDAO.java
+│   └── WatchlistDAO.java
+│
+├── model
+│   ├── Actor.java
+│   ├── Director.java
+│   ├── Movie.java
+│   ├── MoviesWatched.java
+│   ├── Review.java
+│   ├── User.java
+│   ├── Userinfo.java
+│   └── Watchlist.java
+│
+├── profile
+│   ├── ProfileFragment.java
+│   └── ProfileViewModel.java
+│
+├── reviews
+│   ├── AddReviewFragment.java
+│   ├── ReviewListFragment.java
+│   └── ReviewViewModel.java
+│
+├── search
+│   ├── SearchFragment.java
+│   └── SearchViewModel.java
+│
+├── ui
+│   ├── MainActivity.java
+│
+├── util
+│   └── Constants.java
+│
+├── viewholder
+│   ├── ShowMovieViewHolder.java
+│   └── ShowReviewViewHolder.java
+│
+└── res
+    ├── drawable
+    ├── layout
+    │   ├── activity_main.xml
+    │   ├── login_fragment.xml
+    │   ├── register_fragment.xml
+    │   ├── home_fragment.xml
+    │   ├── movie_details_fragment.xml
+    │   ├── profile_fragment.xml
+    │   ├── search_fragment.xml
+    │   ├── add_review_fragment.xml
+    │   └── add_movie_fragment.xml
+    ├── mipmap
+    ├── values
+    ├── navigation
+    │   └── navigation_graph.xml
+    └── xml
