@@ -1,5 +1,9 @@
 com.example.reviewmate
 |
+├── home
+│   ├── HomeFragment.java
+│   └── HomeViewModel.java
+|
 ├── login
 │   ├── LoginFragment.java
 │   ├── LoginViewModel.java
@@ -18,8 +22,6 @@ com.example.reviewmate
 │   └── BrowseViewModel.java
 │
 ├── movie
-│   ├── Movie.java
-│   ├── MovieDAO.java
 │   ├── MovieRepository.java
 │   └── MovieDetailsFragment.java
 │
@@ -70,8 +72,7 @@ com.example.reviewmate
 │   ├── SearchFragment.java
 │   └── SearchViewModel.java
 │
-├── ui
-│   ├── MainActivity.java
+├── MainActivity.java
 │
 ├── util
 │   └── Constants.java
@@ -91,7 +92,8 @@ com.example.reviewmate
     │   ├── profile_fragment.xml
     │   ├── search_fragment.xml
     │   ├── add_review_fragment.xml
-    │   └── add_movie_fragment.xml
+    │   ├── add_movie_fragment.xml
+    │   └── add_watchlist_fragment.xml
     ├── mipmap
     ├── values
     ├── navigation
