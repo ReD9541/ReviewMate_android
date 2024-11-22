@@ -1,5 +1,3 @@
-// Updated Android app file structure using Jetpack components, Navigation, DAOs, Converters, and Repository classes.
-
 com.example.reviewmate
 |
 ├── home
