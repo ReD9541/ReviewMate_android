@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main, LoginFragment.newInstance())
-                    .commitNow();
-        }
+//        if(savedInstanceState == null){
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main, LoginFragment.newInstance())
+//                    .commitNow();
+//        }
     }
 }
