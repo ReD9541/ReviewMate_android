@@ -17,7 +17,7 @@ public class Director {
     @ColumnInfo(name = "bio_text")
     private String bioText;
 
-    public Director() {
+    public Director(int i, String frankDarabont, String s) {
     }
 
     public Director(String name, String bioText) {

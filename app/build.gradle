@@ -43,11 +43,13 @@ dependencies {
     implementation libs.room.common
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+    implementation libs.sqlite
+    implementation libs.room.runtime
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
-
+    annotationProcessor libs.room.compiler
 
 
 }

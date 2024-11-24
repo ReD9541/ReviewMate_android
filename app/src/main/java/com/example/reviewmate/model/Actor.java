@@ -17,7 +17,7 @@ public class Actor {
     @ColumnInfo(name = "bio_text")
     private String bioText;
 
-    public Actor() {
+    public Actor(int i, String timRobbins, String s) {
     }
 
     public Actor(String name, String bioText) {

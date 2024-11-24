@@ -3,6 +3,8 @@ package com.example.reviewmate.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -17,7 +19,9 @@ import static androidx.room.ForeignKey.CASCADE;
                         parentColumns = "movie_id",
                         childColumns = "movie_id",
                         onDelete = CASCADE)
-        })
+        },
+        indices = {@Index(value = "user_id"), @Index(value = "movie_id")}
+)
 public class Watchlist {
 
     @PrimaryKey(autoGenerate = true)
@@ -33,7 +37,24 @@ public class Watchlist {
     @ColumnInfo(name = "added_date")
     private String addedDate;
 
+    // Default no-argument constructor required by Room
     public Watchlist() {
+    }
+
+    // Constructor for creating Watchlist instances
+    @Ignore
+    public Watchlist(Integer userId, Integer movieId, String addedDate) {
+        this.userId = userId;
+        this.movieId = movieId;
+        this.addedDate = addedDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getUserId() {
@@ -59,11 +80,4 @@ public class Watchlist {
     public void setAddedDate(String addedDate) {
         this.addedDate = addedDate;
     }
-
-    public Watchlist(Integer userId, Integer movieId, String addedDate) {
-        this.userId = userId;
-        this.movieId = movieId;
-        this.addedDate = addedDate;
-    }
-
 }

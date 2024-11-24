@@ -2,6 +2,7 @@ package com.example.reviewmate.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "userlogin")
@@ -14,15 +15,37 @@ public class User {
     @ColumnInfo(name = "username")
     private String username;
 
-    @ColumnInfo(name = "password_hash")
-    private String passwordHash;
+    @ColumnInfo(name = "password")
+    private String password;
 
     @ColumnInfo(name = "email")
     private String email;
 
+    @ColumnInfo(name = "profile_picture_url")
+    private String profilePictureUrl;
+
+    // No-argument constructor (Room requires this)
     public User() {
     }
 
+    // Constructor for creating user without profile picture
+    @Ignore
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    // Constructor for creating user with profile picture
+    @Ignore
+    public User(String username, String password, String email, String profilePictureUrl) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.profilePictureUrl = profilePictureUrl;
+    }
+
+    // Getters and setters
     public Integer getId() {
         return id;
     }
@@ -39,12 +62,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -55,10 +78,11 @@ public class User {
         this.email = email;
     }
 
-    public User(String username, String passwordHash, String email) {
-        this.username = username;
-        this.passwordHash = passwordHash;
-        this.email = email;
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
     }
 
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
+    }
 }

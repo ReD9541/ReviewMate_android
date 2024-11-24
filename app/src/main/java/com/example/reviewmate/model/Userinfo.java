@@ -3,6 +3,8 @@ package com.example.reviewmate.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -11,7 +13,9 @@ import static androidx.room.ForeignKey.CASCADE;
         foreignKeys = @ForeignKey(entity = User.class,
                 parentColumns = "id",
                 childColumns = "user_id",
-                onDelete = CASCADE))
+                onDelete = CASCADE),
+        indices = {@Index(value = "user_id")}
+)
 public class Userinfo {
 
     @PrimaryKey(autoGenerate = true)
@@ -43,6 +47,26 @@ public class Userinfo {
     private String profilePictureUrl;
 
     public Userinfo() {
+    }
+
+    @Ignore
+    public Userinfo(Integer userId, String firstName, String lastName, String country, String address, String bio, String joinedOn, String profilePictureUrl) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.country = country;
+        this.address = address;
+        this.bio = bio;
+        this.joinedOn = joinedOn;
+        this.profilePictureUrl = profilePictureUrl;
+    }
+
+    public Integer getRowId() {
+        return rowId;
+    }
+
+    public void setRowId(Integer rowId) {
+        this.rowId = rowId;
     }
 
     public String getProfilePictureUrl() {
@@ -108,16 +132,4 @@ public class Userinfo {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
-    public Userinfo(Integer userId, String firstName, String lastName, String country, String address, String bio, String joinedOn, String profilePictureUrl) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.country = country;
-        this.address = address;
-        this.bio = bio;
-        this.joinedOn = joinedOn;
-        this.profilePictureUrl = profilePictureUrl;
-    }
-
 }

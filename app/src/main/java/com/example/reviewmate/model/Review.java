@@ -1,7 +1,6 @@
 package com.example.reviewmate.model;
 
-import static androidx.room.ForeignKey.CASCADE;
-
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -9,73 +8,91 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
+import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "reviews",
         foreignKeys = {
+                @ForeignKey(entity = User.class,
+                        parentColumns = "id",
+                        childColumns = "user_id",
+                        onDelete = CASCADE),
                 @ForeignKey(entity = Movie.class,
                         parentColumns = "movie_id",
                         childColumns = "movie_id",
-                        onDelete = CASCADE
-                ),
-                @ForeignKey(entity = User.class,
-                        parentColumns = "user_id",
-                        childColumns = "user_id",
-                        onDelete = CASCADE
-                ),
+                        onDelete = CASCADE)
         },
-        indices = {
-                @Index(value = "movie_id"),
-                @Index(value = "user_id"),
-                @Index(value = {"movie_id", "user_id"}, unique = true)
-        }
+        indices = {@Index(value = "user_id"), @Index(value = "movie_id")}
 )
 public class Review {
 
     @PrimaryKey(autoGenerate = true)
+    @NonNull
     @ColumnInfo(name = "review_id")
-    private Integer id;
+    private Integer reviewId;
+
+    @NonNull
+    @ColumnInfo(name = "user_id")
+    private Integer userId;
+
+    @NonNull
+    @ColumnInfo(name = "movie_id")
+    private Integer movieId;
 
     @ColumnInfo(name = "rating")
-    private Float rating;
+    private Integer rating;
 
     @ColumnInfo(name = "review_text")
     private String reviewText;
 
     @ColumnInfo(name = "review_date")
-    private Date reviewDate;
+    private String reviewDate;
 
-    @ColumnInfo(name = "movie_id")
-    private Integer movieId;
-
-    @ColumnInfo(name = "user_id")
-    private Integer userId;
-
-    @Ignore
+    // Default no-argument constructor required by Room
     public Review() {
     }
 
-    public Review(Float rating, String reviewText, Date reviewDate, Integer movieId, Integer userId) {
+    // Constructor for creating Review instances
+    @Ignore
+    public Review(@NonNull Integer userId, @NonNull Integer movieId, Integer rating, String reviewText, String reviewDate) {
+        this.userId = userId;
+        this.movieId = movieId;
         this.rating = rating;
         this.reviewText = reviewText;
         this.reviewDate = reviewDate;
-        this.movieId = movieId;
+    }
+
+    @NonNull
+    public Integer getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(@NonNull Integer reviewId) {
+        this.reviewId = reviewId;
+    }
+
+    @NonNull
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(@NonNull Integer userId) {
         this.userId = userId;
     }
 
-    public Integer getId() {
-        return id;
+    @NonNull
+    public Integer getMovieId() {
+        return movieId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setMovieId(@NonNull Integer movieId) {
+        this.movieId = movieId;
     }
 
-    public Float getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(Float rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -87,39 +104,11 @@ public class Review {
         this.reviewText = reviewText;
     }
 
-    public Date getReviewDate() {
+    public String getReviewDate() {
         return reviewDate;
     }
 
-    public void setReviewDate(Date reviewDate) {
+    public void setReviewDate(String reviewDate) {
         this.reviewDate = reviewDate;
-    }
-
-    public Integer getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(Integer movieId) {
-        this.movieId = movieId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    @Override
-    public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", rating=" + rating +
-                ", reviewText='" + reviewText + '\'' +
-                ", reviewDate=" + reviewDate +
-                ", movieId=" + movieId +
-                ", userId=" + userId +
-                '}';
     }
 }

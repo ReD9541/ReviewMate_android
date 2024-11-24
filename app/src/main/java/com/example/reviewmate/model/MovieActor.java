@@ -1,11 +1,13 @@
 package com.example.reviewmate.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "movie_actors",
-        primaryKeys = {"movie_id", "actor_id"},
         foreignKeys = {
                 @ForeignKey(entity = Movie.class,
                         parentColumns = "movie_id",
@@ -15,35 +17,53 @@ import androidx.room.ForeignKey;
                         parentColumns = "actor_id",
                         childColumns = "actor_id",
                         onDelete = ForeignKey.CASCADE)
-        })
+        },
+        indices = {@Index(value = "movie_id"), @Index(value = "actor_id")}
+)
 public class MovieActor {
 
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "id")
+    private Integer id = 0;
+
     @ColumnInfo(name = "movie_id")
+    @NonNull
     private Integer movieId;
 
     @ColumnInfo(name = "actor_id")
+    @NonNull
     private Integer actorId;
 
+    public MovieActor(@NonNull Integer movieId, @NonNull Integer actorId) {
+        this.movieId = movieId;
+        this.actorId = actorId;
+    }
+
+    @NonNull
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(@NonNull Integer id) {
+        this.id = id;
+    }
+
+    @NonNull
     public Integer getActorId() {
         return actorId;
     }
 
-    public void setActorId(Integer actorId) {
+    public void setActorId(@NonNull Integer actorId) {
         this.actorId = actorId;
     }
 
+    @NonNull
     public Integer getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Integer movieId) {
+    public void setMovieId(@NonNull Integer movieId) {
         this.movieId = movieId;
     }
-
-    public MovieActor(Integer movieId, Integer actorId) {
-        this.movieId = movieId;
-        this.actorId = actorId;
-    }
-
-
 }

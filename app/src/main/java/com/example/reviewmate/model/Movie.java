@@ -59,7 +59,7 @@ public class Movie {
     @ColumnInfo(name = "box_office")
     private Long boxOffice;
 
-    public Movie() {
+    public Movie(int i, String theShawshankRedemption, String date, String drama, int i1, float v, float v1, String s, String frankDarabont, String string, String english, String usa, String s1, String url, String string1, String r, long l, long l1) {
     }
 
     public Long getBoxOffice() {
