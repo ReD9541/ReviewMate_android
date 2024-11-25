@@ -28,7 +28,6 @@ import java.io.Serializable;
 public class Review implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     @ColumnInfo(name = "review_id")
     private Integer reviewId;
 
@@ -40,6 +39,7 @@ public class Review implements Serializable {
     @ColumnInfo(name = "movie_id")
     private Integer movieId;
 
+    @NonNull
     @ColumnInfo(name = "rating")
     private Integer rating;
 
@@ -49,12 +49,13 @@ public class Review implements Serializable {
     @ColumnInfo(name = "review_date")
     private String reviewDate;
 
+    // Default constructor for Room
     @Ignore
     public Review() {
     }
 
-
-    public Review(@NonNull Integer userId, @NonNull Integer movieId, Integer rating, String reviewText, String reviewDate) {
+    @Ignore
+    public Review(@NonNull Integer userId, @NonNull Integer movieId, @NonNull Integer rating, String reviewText, String reviewDate) {
         this.userId = userId;
         this.movieId = movieId;
         this.rating = rating;
@@ -62,12 +63,22 @@ public class Review implements Serializable {
         this.reviewDate = reviewDate;
     }
 
-    @NonNull
+    // Full constructor with all fields
+    public Review(Integer reviewId, @NonNull Integer userId, @NonNull Integer movieId, @NonNull Integer rating, String reviewText, String reviewDate) {
+        this.reviewId = reviewId;
+        this.userId = userId;
+        this.movieId = movieId;
+        this.rating = rating;
+        this.reviewText = reviewText;
+        this.reviewDate = reviewDate;
+    }
+
+    // Getters and setters
     public Integer getReviewId() {
         return reviewId;
     }
 
-    public void setReviewId(@NonNull Integer reviewId) {
+    public void setReviewId(Integer reviewId) {
         this.reviewId = reviewId;
     }
 
@@ -89,11 +100,12 @@ public class Review implements Serializable {
         this.movieId = movieId;
     }
 
+    @NonNull
     public Integer getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(@NonNull Integer rating) {
         this.rating = rating;
     }
 

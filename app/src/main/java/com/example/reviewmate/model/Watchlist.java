@@ -1,5 +1,6 @@
 package com.example.reviewmate.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -30,9 +31,11 @@ public class Watchlist implements Serializable {
     @ColumnInfo(name = "id")
     private Integer id;
 
+    @NonNull
     @ColumnInfo(name = "user_id")
     private Integer userId;
 
+    @NonNull
     @ColumnInfo(name = "movie_id")
     private Integer movieId;
 
@@ -43,13 +46,13 @@ public class Watchlist implements Serializable {
     public Watchlist() {
     }
 
-
-    public Watchlist(Integer userId, Integer movieId, String addedDate) {
+    public Watchlist(@NonNull Integer userId, @NonNull Integer movieId, String addedDate) {
         this.userId = userId;
         this.movieId = movieId;
         this.addedDate = addedDate;
     }
 
+    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -58,19 +61,21 @@ public class Watchlist implements Serializable {
         this.id = id;
     }
 
+    @NonNull
     public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(@NonNull Integer userId) {
         this.userId = userId;
     }
 
+    @NonNull
     public Integer getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Integer movieId) {
+    public void setMovieId(@NonNull Integer movieId) {
         this.movieId = movieId;
     }
 

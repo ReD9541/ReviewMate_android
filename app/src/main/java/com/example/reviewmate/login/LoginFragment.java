@@ -33,7 +33,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Use ViewBinding to inflate the view
         binding = LoginFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -42,7 +41,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize ViewModels
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
@@ -74,22 +72,23 @@ public class LoginFragment extends Fragment {
                     if (userId != null && userId != -1) {
                         sharedViewModel.setUserId(userId);
 
-                        // Observe the User object using findById()
                         mViewModel.findById(email).observe(getViewLifecycleOwner(), user -> {
                             if (user != null) {
                                 loggedInUserEmail = user.getEmail();
                                 loggedInUserName = user.getUsername();
 
-                                // Prepare the bundle with user details
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("USER_DETAILS", user);
 
-                                // Show a success toast
                                 showToast(successfulLoginMessage);
 
-                                // Navigate to the Home Fragment and pass the user details
-                                NavController navController = Navigation.findNavController(view);
-                                navController.navigate(R.id.action_loginFragment_to_homeFragment, bundle);
+                                try {
+                                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+                                    navController.navigate(R.id.action_loginFragment_to_homeFragment, bundle);
+                                } catch (IllegalArgumentException e) {
+                                    e.printStackTrace();
+                                    showToast("Navigation error, please try again later.");
+                                }
                             } else {
                                 showToast("User not found.");
                             }
@@ -105,6 +104,7 @@ public class LoginFragment extends Fragment {
             }
         });
     }
+
 
     // Validate Input Method
     private boolean validateInput(String email, String password) {

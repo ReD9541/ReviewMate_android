@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -25,7 +26,6 @@ import java.io.Serializable;
 public class MovieActor implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     @ColumnInfo(name = "id")
     private Integer id;
 
@@ -37,17 +37,29 @@ public class MovieActor implements Serializable {
     @NonNull
     private Integer actorId;
 
+    @Ignore
+    public MovieActor() {
+    }
+
+    @Ignore
     public MovieActor(@NonNull Integer movieId, @NonNull Integer actorId) {
         this.movieId = movieId;
         this.actorId = actorId;
     }
 
-    @NonNull
+    // Constructor with all fields (including id)
+    public MovieActor(Integer id, @NonNull Integer movieId, @NonNull Integer actorId) {
+        this.id = id;
+        this.movieId = movieId;
+        this.actorId = actorId;
+    }
+
+    // Getters and setters
     public Integer getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

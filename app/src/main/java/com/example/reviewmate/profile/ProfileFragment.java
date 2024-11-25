@@ -11,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.reviewmate.R;
-import com.example.reviewmate.data.ReviewMateRoomDatabase;
 import com.example.reviewmate.databinding.ProfileFragmentBinding;
-import com.example.reviewmate.dao.UserinfoDAO;
 import com.example.reviewmate.login.LoginFragment;
 import com.example.reviewmate.model.Userinfo;
 import com.squareup.picasso.Picasso;
@@ -22,7 +20,7 @@ public class ProfileFragment extends Fragment {
 
     private ProfileFragmentBinding binding;
     private SharedViewModel sharedViewModel;
-    private UserinfoDAO userinfoDAO;
+    private ProfileViewModel profileViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -39,8 +37,8 @@ public class ProfileFragment extends Fragment {
         // Initialize SharedViewModel
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        // Initialize the UserinfoDAO using the database instance
-        userinfoDAO = ReviewMateRoomDatabase.getDatabase(requireActivity().getApplication()).userinfoDAO();
+        // Initialize ProfileViewModel
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         // Populate Profile Information from global variables
         populateUserInfo();
@@ -48,8 +46,8 @@ public class ProfileFragment extends Fragment {
         // Observe userId from SharedViewModel and fetch userinfo data accordingly
         sharedViewModel.getUserId().observe(getViewLifecycleOwner(), userId -> {
             if (userId != null && userId != -1) {
-                // Fetch UserInfo using UserinfoDAO
-                userinfoDAO.getUserinfoByUserId(userId).observe(getViewLifecycleOwner(), userinfo -> {
+                // Use ProfileViewModel to fetch additional user information
+                profileViewModel.getUserInfo(userId).observe(getViewLifecycleOwner(), userinfo -> {
                     if (userinfo != null) {
                         updateAdditionalUserInfo(userinfo);
                     } else {

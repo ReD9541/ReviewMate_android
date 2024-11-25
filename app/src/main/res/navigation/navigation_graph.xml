@@ -5,6 +5,7 @@
     android:id="@+id/navigation_graph"
     app:startDestination="@id/loginFragment">
 
+    <!-- Home Fragment -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.reviewmate.home.HomeFragment"
@@ -13,8 +14,15 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 
+    <!-- Profile Fragment -->
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.reviewmate.profile.ProfileFragment"
@@ -24,24 +32,43 @@
             android:id="@+id/action_profileFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+
+    <!-- Register Fragment -->
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.reviewmate.login.RegisterFragment"
-        android:label="register_fragment"
-        tools:layout="@layout/register_fragment" />
+        android:label="Register Fragment"
+        tools:layout="@layout/register_fragment"/>
+
+
+    <!-- Login Fragment -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.reviewmate.login.LoginFragment"
-        android:label="login_fragment"
-        tools:layout="@layout/login_fragment" >
+        android:label="Login Fragment"
+        tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
-            app:popUpTo="@id/registerFragment" />
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:popUpTo="@id/homeFragment" />
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+
+    <!-- Search Fragment -->
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.reviewmate.search.SearchFragment"
+        android:label="Search Fragment"
+        tools:layout="@layout/search_fragment" />
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.reviewmate.movie.MovieDetailFragment"
+        android:label="movie_detail_fragment"
+        tools:layout="@layout/movie_detail_fragment" />
 
 </navigation>

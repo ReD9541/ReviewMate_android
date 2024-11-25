@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.reviewmate.dao.UserDAO;
 import com.example.reviewmate.dao.UserinfoDAO;
+import com.example.reviewmate.data.ReviewMateRoomDatabase;
 import com.example.reviewmate.model.User;
 import com.example.reviewmate.model.Userinfo;
 

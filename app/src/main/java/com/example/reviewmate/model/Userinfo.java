@@ -22,42 +22,43 @@ public class Userinfo implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "row_id")
-    public Integer rowId;
+    private Integer rowId;
 
     @ColumnInfo(name = "user_id")
-    public Integer userId;
+    private Integer userId;
 
     @ColumnInfo(name = "fname")
-    public String firstName;
+    private String firstName;
 
     @ColumnInfo(name = "lname")
-    public String lastName;
+    private String lastName;
 
     @ColumnInfo(name = "username")
-    public String username;  // Added username field
+    private String username;
 
     @ColumnInfo(name = "country")
-    public String country;
+    private String country;
 
     @ColumnInfo(name = "address")
-    public String address;
+    private String address;
 
     @ColumnInfo(name = "bio")
-    public String bio;
+    private String bio;
 
     @ColumnInfo(name = "joined_on")
-    public String joinedOn;
+    private String joinedOn;
 
     @ColumnInfo(name = "pfp_url")
-    public String profilePictureUrl;
+    private String profilePictureUrl;
 
+    // Default no-argument constructor (Ignored by Room)
     @Ignore
-    public Userinfo(){
-
+    public Userinfo() {
     }
 
-
-    public Userinfo(Integer userId, String firstName, String lastName,  String country, String address, String bio, String joinedOn, String profilePictureUrl) {
+    // Constructor without `rowId` and `username`
+    @Ignore
+    public Userinfo(Integer userId, String firstName, String lastName, String country, String address, String bio, String joinedOn, String profilePictureUrl) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -68,8 +69,20 @@ public class Userinfo implements Serializable {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    // Getters and setters
+    // Full parameter constructor
+    public Userinfo(Integer userId, String firstName, String lastName, String username, String country, String address, String bio, String joinedOn, String profilePictureUrl) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.country = country;
+        this.address = address;
+        this.bio = bio;
+        this.joinedOn = joinedOn;
+        this.profilePictureUrl = profilePictureUrl;
+    }
 
+    // Getters and setters
     public Integer getRowId() {
         return rowId;
     }
@@ -78,52 +91,12 @@ public class Userinfo implements Serializable {
         this.rowId = rowId;
     }
 
-    public String getProfilePictureUrl() {
-        return profilePictureUrl;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setProfilePictureUrl(String profilePictureUrl) {
-        this.profilePictureUrl = profilePictureUrl;
-    }
-
-    public String getJoinedOn() {
-        return joinedOn;
-    }
-
-    public void setJoinedOn(String joinedOn) {
-        this.joinedOn = joinedOn;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -134,11 +107,59 @@ public class Userinfo implements Serializable {
         this.firstName = firstName;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getJoinedOn() {
+        return joinedOn;
+    }
+
+    public void setJoinedOn(String joinedOn) {
+        this.joinedOn = joinedOn;
+    }
+
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
     }
 }

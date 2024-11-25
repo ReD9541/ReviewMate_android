@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.reviewmate.R;
 import com.example.reviewmate.databinding.HomeFragmentBinding;
+import com.example.reviewmate.movie.MovieRecyclerViewAdapter;
+import com.example.reviewmate.model.Movie;
 
 public class HomeFragment extends Fragment {
 
@@ -57,19 +59,21 @@ public class HomeFragment extends Fragment {
 
     private void setupRecyclerViews() {
         // Set up the adapters for the RecyclerViews
-        topRatedAdapter = new MovieRecyclerViewAdapter(movie -> {
-            // top-rated movie (
-        });
-
-        latestAdapter = new MovieRecyclerViewAdapter(movie -> {
-            //  latest movie
-        });
+        topRatedAdapter = new MovieRecyclerViewAdapter(movie -> navigateToMovieDetail(movie), R.layout.movie_snippets);
+        latestAdapter = new MovieRecyclerViewAdapter(movie -> navigateToMovieDetail(movie), R.layout.movie_snippets);
 
         binding.topRatedMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         binding.topRatedMoviesRecyclerView.setAdapter(topRatedAdapter);
 
         binding.latestMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         binding.latestMoviesRecyclerView.setAdapter(latestAdapter);
+    }
+
+    private void navigateToMovieDetail(Movie movie) {
+        // Assuming there's a navigation action that navigates to a detailed fragment of the movie
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("MOVIE_DETAILS", movie);
+        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_movieDetailFragment, bundle);
     }
 
     @Override
