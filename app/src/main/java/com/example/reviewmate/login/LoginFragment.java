@@ -5,19 +5,27 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.example.reviewmate.R;
 import com.example.reviewmate.databinding.LoginFragmentBinding;
+import com.example.reviewmate.model.User;
+import com.example.reviewmate.profile.SharedViewModel;
 
 public class LoginFragment extends Fragment {
-
+    private SharedViewModel sharedViewModel;
     private LoginViewModel mViewModel;
     private LoginFragmentBinding binding;
+
+    // Global variables for logged-in user info
+    public static String loggedInUserEmail;
+    public static String loggedInUserName;
 
     private final String successfulLoginMessage = "Welcome, you're logged in";
     private final String invalidEmailOrPasswordMessage = "Invalid email or password";
@@ -34,6 +42,8 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Initialize ViewModels
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         binding.loginLoginButton.setOnClickListener(v -> {
@@ -48,17 +58,7 @@ public class LoginFragment extends Fragment {
             }
 
             if (validateInput(email, password)) {
-                mViewModel.login(email, password);
-            }
-        });
-
-        mViewModel.getLoginStatus().observe(getViewLifecycleOwner(), isSuccess -> {
-            if (isSuccess) {
-                showToast(successfulLoginMessage);
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_homeFragment);
-            } else {
-                binding.loginEmailTIL.setError(invalidEmailOrPasswordMessage);
-                showToast(invalidEmailOrPasswordMessage);
+                login(email, password, v);
             }
         });
 
@@ -66,18 +66,52 @@ public class LoginFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerFragment));
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    private void login(String email, String password, View view) {
+        mViewModel.login(email, password);
+        mViewModel.getLoginStatus().observe(getViewLifecycleOwner(), isSuccess -> {
+            if (isSuccess) {
+                mViewModel.getLoggedInUserId().observe(getViewLifecycleOwner(), userId -> {
+                    if (userId != null && userId != -1) {
+                        sharedViewModel.setUserId(userId);
+
+                        // Observe the User object using findById()
+                        mViewModel.findById(email).observe(getViewLifecycleOwner(), user -> {
+                            if (user != null) {
+                                loggedInUserEmail = user.getEmail();
+                                loggedInUserName = user.getUsername();
+
+                                // Prepare the bundle with user details
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("USER_DETAILS", user);
+
+                                // Show a success toast
+                                showToast(successfulLoginMessage);
+
+                                // Navigate to the Home Fragment and pass the user details
+                                NavController navController = Navigation.findNavController(view);
+                                navController.navigate(R.id.action_loginFragment_to_homeFragment, bundle);
+                            } else {
+                                showToast("User not found.");
+                            }
+                        });
+
+                    } else {
+                        showToast("User ID not found.");
+                    }
+                });
+            } else {
+                binding.loginEmailTIL.setError(invalidEmailOrPasswordMessage);
+                showToast(invalidEmailOrPasswordMessage);
+            }
+        });
     }
 
+    // Validate Input Method
     private boolean validateInput(String email, String password) {
         boolean isValid = true;
 
         // Validate email
         if (email == null || email.isEmpty()) {
-            // Messages for toast
             String emailRequiredMessage = "Email is required";
             binding.loginEmailTIL.setError(emailRequiredMessage);
             showToast(emailRequiredMessage);
@@ -111,5 +145,11 @@ public class LoginFragment extends Fragment {
 
     private void showToast(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

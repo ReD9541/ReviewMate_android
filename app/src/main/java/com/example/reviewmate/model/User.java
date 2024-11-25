@@ -5,8 +5,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "userlogin")
-public class User {
+public class User implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -24,11 +26,10 @@ public class User {
     @ColumnInfo(name = "profile_picture_url")
     private String profilePictureUrl;
 
-    // No-argument constructor (Room requires this)
+    @Ignore
     public User() {
     }
 
-    // Constructor for creating user without profile picture
     @Ignore
     public User(String username, String password, String email) {
         this.username = username;
@@ -36,8 +37,7 @@ public class User {
         this.email = email;
     }
 
-    // Constructor for creating user with profile picture
-    @Ignore
+
     public User(String username, String password, String email, String profilePictureUrl) {
         this.username = username;
         this.password = password;
@@ -45,7 +45,6 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    // Getters and setters
     public Integer getId() {
         return id;
     }

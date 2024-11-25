@@ -2,10 +2,13 @@ package com.example.reviewmate.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "movie")
-public class Movie {
+public class Movie implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "movie_id")
@@ -59,7 +62,8 @@ public class Movie {
     @ColumnInfo(name = "box_office")
     private Long boxOffice;
 
-    public Movie(int i, String theShawshankRedemption, String date, String drama, int i1, float v, float v1, String s, String frankDarabont, String string, String english, String usa, String s1, String url, String string1, String r, long l, long l1) {
+    @Ignore
+    public Movie(int movieId, String title, String releaseDate, String genre, int runtime, float imdbRating, float userRating, String description, String director, String cast, String language, String country, String posterUrl, String trailerUrl, String ageRating, long budget, long boxOffice) {
     }
 
     public Long getBoxOffice() {

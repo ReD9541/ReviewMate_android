@@ -1,5 +1,6 @@
 package com.example.reviewmate.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -27,4 +28,10 @@ public interface MovieDAO {
 
     @Query("SELECT * FROM movie")
     List<Movie> getAllMovies();
+
+    @Query("SELECT * FROM movie ORDER BY imdb_rating DESC LIMIT 4")
+    LiveData<List<Movie>> getTopRatedMovies();
+
+    @Query("SELECT * FROM movie ORDER BY release_date DESC LIMIT 4")
+    LiveData<List<Movie>> getLatestMovies();
 }

@@ -9,6 +9,8 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+import java.io.Serializable;
+
 @Entity(tableName = "userinfo",
         foreignKeys = @ForeignKey(entity = User.class,
                 parentColumns = "id",
@@ -16,41 +18,46 @@ import static androidx.room.ForeignKey.CASCADE;
                 onDelete = CASCADE),
         indices = {@Index(value = "user_id")}
 )
-public class Userinfo {
+public class Userinfo implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "row_id")
-    private Integer rowId;
+    public Integer rowId;
 
     @ColumnInfo(name = "user_id")
-    private Integer userId;
+    public Integer userId;
 
     @ColumnInfo(name = "fname")
-    private String firstName;
+    public String firstName;
 
     @ColumnInfo(name = "lname")
-    private String lastName;
+    public String lastName;
+
+    @ColumnInfo(name = "username")
+    public String username;  // Added username field
 
     @ColumnInfo(name = "country")
-    private String country;
+    public String country;
 
     @ColumnInfo(name = "address")
-    private String address;
+    public String address;
 
     @ColumnInfo(name = "bio")
-    private String bio;
+    public String bio;
 
     @ColumnInfo(name = "joined_on")
-    private String joinedOn;
+    public String joinedOn;
 
     @ColumnInfo(name = "pfp_url")
-    private String profilePictureUrl;
-
-    public Userinfo() {
-    }
+    public String profilePictureUrl;
 
     @Ignore
-    public Userinfo(Integer userId, String firstName, String lastName, String country, String address, String bio, String joinedOn, String profilePictureUrl) {
+    public Userinfo(){
+
+    }
+
+
+    public Userinfo(Integer userId, String firstName, String lastName,  String country, String address, String bio, String joinedOn, String profilePictureUrl) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,6 +67,8 @@ public class Userinfo {
         this.joinedOn = joinedOn;
         this.profilePictureUrl = profilePictureUrl;
     }
+
+    // Getters and setters
 
     public Integer getRowId() {
         return rowId;

@@ -1,5 +1,6 @@
 package com.example.reviewmate.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,8 +24,8 @@ public interface UserinfoDAO {
     void delete(Userinfo userinfo);
 
     @Query("SELECT * FROM userinfo WHERE user_id = :userId")
-    Userinfo getUserinfoByUserId(int userId);
+    LiveData<Userinfo> getUserinfoByUserId(int userId);
 
     @Query("SELECT * FROM userinfo")
-    List<Userinfo> getAllUserinfo();
+    LiveData<List<Userinfo>> getAllUserinfo();
 }

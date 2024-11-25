@@ -7,6 +7,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "movie_actors",
         foreignKeys = {
                 @ForeignKey(entity = Movie.class,
@@ -20,12 +22,12 @@ import androidx.room.PrimaryKey;
         },
         indices = {@Index(value = "movie_id"), @Index(value = "actor_id")}
 )
-public class MovieActor {
+public class MovieActor implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "id")
-    private Integer id = 0;
+    private Integer id;
 
     @ColumnInfo(name = "movie_id")
     @NonNull

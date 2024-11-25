@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".profile.ProfileFragment">
 
+    <!-- Vertical Guideline for Start -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineProfileStart"
         android:layout_width="wrap_content"
@@ -15,6 +16,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.10" />
 
+    <!-- Vertical Guideline for End -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineProfileEnd"
         android:layout_width="wrap_content"
@@ -22,7 +24,17 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.90" />
 
+    <!-- Horizontal Guideline for Bottom -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineProfileBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <!-- CardView for Profile Information -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/profileCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
@@ -34,24 +46,27 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
+            <!-- Profile Image -->
             <ImageView
                 android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="32dp"
                 android:contentDescription="Profile Image"
                 android:src="@drawable/ic_profile_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- Profile Name -->
             <TextView
                 android:id="@+id/profileName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="John Doe"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -60,6 +75,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profileImage" />
 
+            <!-- Profile Email -->
             <TextView
                 android:id="@+id/profileEmail"
                 android:layout_width="0dp"
@@ -71,45 +87,49 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profileName" />
 
+            <!-- Profile Country -->
             <TextView
                 android:id="@+id/profileCountry"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Country: USA"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profileEmail" />
 
+            <!-- Profile Joined Date -->
             <TextView
                 android:id="@+id/profileJoinedDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Joined on: 2024-11-07"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profileCountry" />
 
+            <!-- Profile Bio -->
             <TextView
                 android:id="@+id/profileBio"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Bio: Movie enthusiast and blogger."
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profileJoinedDate" />
 
+            <!-- Edit Profile Button -->
             <Button
                 android:id="@+id/editProfileButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
                 android:text="Edit Profile"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -118,12 +138,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineProfileBottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

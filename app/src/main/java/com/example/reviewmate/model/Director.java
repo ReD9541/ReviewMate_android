@@ -2,10 +2,13 @@ package com.example.reviewmate.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "directors")
-public class Director {
+public class Director implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "director_id")
@@ -16,8 +19,8 @@ public class Director {
 
     @ColumnInfo(name = "bio_text")
     private String bioText;
-
-    public Director(int i, String frankDarabont, String s) {
+    @Ignore
+    public Director(int directorId, String name, String bioText) {
     }
 
     public Director(String name, String bioText) {

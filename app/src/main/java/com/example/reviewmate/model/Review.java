@@ -10,6 +10,8 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+import java.io.Serializable;
+
 @Entity(tableName = "reviews",
         foreignKeys = {
                 @ForeignKey(entity = User.class,
@@ -23,7 +25,7 @@ import static androidx.room.ForeignKey.CASCADE;
         },
         indices = {@Index(value = "user_id"), @Index(value = "movie_id")}
 )
-public class Review {
+public class Review implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -47,12 +49,11 @@ public class Review {
     @ColumnInfo(name = "review_date")
     private String reviewDate;
 
-    // Default no-argument constructor required by Room
+    @Ignore
     public Review() {
     }
 
-    // Constructor for creating Review instances
-    @Ignore
+
     public Review(@NonNull Integer userId, @NonNull Integer movieId, Integer rating, String reviewText, String reviewDate) {
         this.userId = userId;
         this.movieId = movieId;

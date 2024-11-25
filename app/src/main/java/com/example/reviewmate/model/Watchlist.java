@@ -9,6 +9,8 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+import java.io.Serializable;
+
 @Entity(tableName = "watchlist",
         foreignKeys = {
                 @ForeignKey(entity = User.class,
@@ -22,7 +24,7 @@ import static androidx.room.ForeignKey.CASCADE;
         },
         indices = {@Index(value = "user_id"), @Index(value = "movie_id")}
 )
-public class Watchlist {
+public class Watchlist implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -37,12 +39,11 @@ public class Watchlist {
     @ColumnInfo(name = "added_date")
     private String addedDate;
 
-    // Default no-argument constructor required by Room
+    @Ignore
     public Watchlist() {
     }
 
-    // Constructor for creating Watchlist instances
-    @Ignore
+
     public Watchlist(Integer userId, Integer movieId, String addedDate) {
         this.userId = userId;
         this.movieId = movieId;
