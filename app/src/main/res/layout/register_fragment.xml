@@ -172,8 +172,27 @@
                         android:importantForAccessibility="yes"
                         android:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
-
                 <!-- Country -->
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/registerUsernameTIL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/registerPasswordTIL">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Username"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <!-- Country -->
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/registerCountryTIL"
                     android:layout_width="0dp"
@@ -183,7 +202,7 @@
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/registerPasswordTIL">
+                    app:layout_constraintTop_toBottomOf="@+id/registerUsernameTIL">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:id="@+id/navigation_graph"
     app:startDestination="@id/loginFragment">
 
-    <!-- Home Fragment -->
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.reviewmate.home.HomeFragment"
@@ -22,7 +22,6 @@
             app:destination="@id/movieDetailFragment" />
     </fragment>
 
-    <!-- Profile Fragment -->
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.reviewmate.profile.ProfileFragment"
@@ -33,12 +32,15 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
-    <!-- Register Fragment -->
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.reviewmate.login.RegisterFragment"
         android:label="Register Fragment"
-        tools:layout="@layout/register_fragment"/>
+        tools:layout="@layout/register_fragment">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 
     <!-- Login Fragment -->
@@ -59,7 +61,6 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <!-- Search Fragment -->
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.reviewmate.search.SearchFragment"

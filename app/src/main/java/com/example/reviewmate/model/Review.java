@@ -7,6 +7,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.RoomWarnings;
 
 import static androidx.room.ForeignKey.CASCADE;
 
@@ -49,7 +50,9 @@ public class Review implements Serializable {
     @ColumnInfo(name = "review_date")
     private String reviewDate;
 
-    // Default constructor for Room
+    @Ignore
+    private transient String username;
+
     @Ignore
     public Review() {
     }
@@ -123,5 +126,13 @@ public class Review implements Serializable {
 
     public void setReviewDate(String reviewDate) {
         this.reviewDate = reviewDate;
+    }
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    public String getUsername() {
+        return username;
+    }
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

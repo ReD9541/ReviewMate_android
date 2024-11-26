@@ -238,36 +238,49 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/trailerWebView">
 
-                    <Button
-                        android:id="@+id/watchlistButton"
+                    <RadioGroup
+                        android:id="@+id/radioGroupWatchStatus"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Add to Watchlist"
-                        app:layout_constraintEnd_toStartOf="@+id/watchedButton"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/watchedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Mark as Watched"
-                        app:layout_constraintBottom_toBottomOf="@+id/watchlistButton"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/watchlistButton"
-                        app:layout_constraintTop_toTopOf="@+id/watchlistButton" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <RadioButton
+                            android:id="@+id/watchlistRadioButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:text="WATCHLIST" />
+
+                        <!-- Watched RadioButton -->
+                        <RadioButton
+                            android:id="@+id/watchedRadioButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="WATCHED" />
+
+                    </RadioGroup>
+
 
                     <RatingBar
                         android:id="@+id/ratingBar"
+                        style="@android:style/Widget.Material.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:stepSize="1.0"
+                        android:layout_marginTop="16dp"
+                        android:isIndicator="false"
+                        android:numStars="10"
+                        android:rating="5"
+                        android:stepSize="1"
+                        android:theme="@style/Widget.AppCompat.RatingBar.Indicator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/watchedButton" />
+                        app:layout_constraintTop_toBottomOf="@id/radioGroupWatchStatus" />
 
                     <EditText
                         android:id="@+id/reviewEditText"
@@ -286,7 +299,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Submit Review"
+                        android:text="SUMBIT"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/reviewEditText" />

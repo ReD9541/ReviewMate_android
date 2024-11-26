@@ -14,17 +14,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.reviewmate.R;
 import com.example.reviewmate.model.Movie;
+import com.example.reviewmate.model.Review;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class MovieDetailFragment extends Fragment {
 
     private MovieDetailViewModel movieDetailViewModel;
+    private ReviewViewModel reviewViewModel;
     private ImageView posterImageView;
-    private TextView titleTextView, releaseDateTextView, runtimeTextView, imdbRatingTextView, userRatingTextView,  directorTextView, castTextView, languageTextView, countryTextView, ageRatingTextView,budgetTextView,  boxOfficeTextView, descriptionTextView;
+    private TextView titleTextView, releaseDateTextView, runtimeTextView, imdbRatingTextView, userRatingTextView, directorTextView, castTextView, languageTextView, countryTextView, ageRatingTextView, budgetTextView, boxOfficeTextView, descriptionTextView;
     private WebView trailerWebView;
+    private RecyclerView reviewsRecyclerView;
+    private ReviewRecyclerViewAdapter reviewAdapter;
 
     @Nullable
     @Override
@@ -37,14 +45,18 @@ public class MovieDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initializeViews(view);
 
-        // Initialize ViewModel
         movieDetailViewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
+        reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
 
-        // Fetch the movieId from the arguments
+        reviewAdapter = new ReviewRecyclerViewAdapter();
+        reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        reviewsRecyclerView.setAdapter(reviewAdapter);
+
         if (getArguments() != null) {
             int movieId = getArguments().getInt("MOVIE_ID", -1);
             if (movieId != -1) {
                 observeMovieDetails(movieId);
+                observeMovieReviewsAndUsernames(movieId);
             }
         }
     }
@@ -65,10 +77,23 @@ public class MovieDetailFragment extends Fragment {
         boxOfficeTextView = view.findViewById(R.id.boxOfficeTextView);
         descriptionTextView = view.findViewById(R.id.descriptionTextView);
         trailerWebView = view.findViewById(R.id.trailerWebView);
+        reviewsRecyclerView = view.findViewById(R.id.reviewsRecyclerView);
     }
 
     private void observeMovieDetails(int movieId) {
         movieDetailViewModel.getMovieDetails(movieId).observe(getViewLifecycleOwner(), this::populateMovieDetails);
+    }
+
+    private void observeMovieReviewsAndUsernames(int movieId) {
+        reviewViewModel.getReviewsWithUsernamesByMovieId(movieId).observe(getViewLifecycleOwner(), reviews -> {
+            if (reviews != null) {
+                reviewViewModel.getUsernamesByMovieId(movieId).observe(getViewLifecycleOwner(), usernames -> {
+                    if (usernames != null && usernames.size() == reviews.size()) {
+                        reviewAdapter.submitList(reviews, usernames);
+                    }
+                });
+            }
+        });
     }
 
     private void populateMovieDetails(Movie movie) {
@@ -107,7 +132,7 @@ public class MovieDetailFragment extends Fragment {
             webSettings.setDomStorageEnabled(true);
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
-            trailerWebView.clearCache(true); // Clear cache to avoid ERR_CACHE_MISS
+            trailerWebView.clearCache(true);
 
             trailerWebView.loadUrl(embedUrl);
         }
@@ -119,6 +144,4 @@ public class MovieDetailFragment extends Fragment {
         }
         return youtubeUrl;
     }
-
-
 }
