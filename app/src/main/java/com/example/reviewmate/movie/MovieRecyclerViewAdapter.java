@@ -113,7 +113,6 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
             userRatingTextView.setText("User Rating: " + movie.getUserRating());
             descriptionTextView.setText(movie.getDescription());
 
-            // Load poster image using Picasso
             Picasso.get()
                     .load(movie.getPosterUrl())
                     .placeholder(R.drawable.ic_default_poster)

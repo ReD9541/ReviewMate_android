@@ -70,11 +70,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void navigateToMovieDetail(Movie movie) {
-        // Assuming there's a navigation action that navigates to a detailed fragment of the movie
         Bundle bundle = new Bundle();
-        bundle.putSerializable("MOVIE_DETAILS", movie);
+        bundle.putInt("MOVIE_ID", movie.getMovieId());
         Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_movieDetailFragment, bundle);
     }
+
 
     @Override
     public void onDestroyView() {

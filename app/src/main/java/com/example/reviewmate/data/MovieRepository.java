@@ -29,4 +29,8 @@ public class MovieRepository {
     public LiveData<List<Movie>> getLatestMovies() {
         return movieDAO.getLatestMovies();
     }
+    public LiveData<Movie> getMovieDetails(int movieId) {
+        return movieDAO.getMovieDetails(movieId);
+    }
+
 }

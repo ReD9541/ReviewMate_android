@@ -34,4 +34,6 @@ public interface MovieDAO {
 
     @Query("SELECT * FROM movie ORDER BY release_date DESC LIMIT 4")
     LiveData<List<Movie>> getLatestMovies();
+    @Query("SELECT * FROM movie WHERE movie_id = :movieId")
+    LiveData<Movie> getMovieDetails(int movieId);
 }

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.reviewmate.R;
+import com.example.reviewmate.data.ReviewMateRoomDatabase;
 import com.example.reviewmate.databinding.LoginFragmentBinding;
 import com.example.reviewmate.model.User;
 import com.example.reviewmate.profile.SharedViewModel;
@@ -30,6 +31,12 @@ public class LoginFragment extends Fragment {
     private final String successfulLoginMessage = "Welcome, you're logged in";
     private final String invalidEmailOrPasswordMessage = "Invalid email or password";
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ReviewMateRoomDatabase.getDatabase(requireContext());
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
