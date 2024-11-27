@@ -1,11 +1,10 @@
-package com.example.reviewmate.movie;
-
-import android.view.View;
+package com.example.reviewmate.viewholder;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.reviewmate.R;
+import com.example.reviewmate.adapters.MovieRecyclerViewAdapter;
 import com.example.reviewmate.databinding.MovieSnippetsBinding;
 import com.example.reviewmate.model.Movie;
 import com.squareup.picasso.Picasso;
@@ -26,8 +25,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         if (movie.getPosterUrl() != null && !movie.getPosterUrl().isEmpty()) {
             Picasso.get()
                     .load(movie.getPosterUrl())
-                    .placeholder(R.drawable.ic_default_poster) // Placeholder image
-                    .error(R.drawable.ic_default_poster)       // Error image
+                    .placeholder(R.drawable.ic_default_poster)
+                    .error(R.drawable.ic_default_poster)
                     .into(binding.posterImageView);
         } else {
             binding.posterImageView.setImageResource(R.drawable.ic_default_poster);

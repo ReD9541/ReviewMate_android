@@ -7,8 +7,12 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,11 +22,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.reviewmate.R;
+import com.example.reviewmate.adapters.ReviewRecyclerViewAdapter;
+import com.example.reviewmate.login.LoginFragment;
 import com.example.reviewmate.model.Movie;
 import com.example.reviewmate.model.Review;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MovieDetailFragment extends Fragment {
 
@@ -33,6 +41,9 @@ public class MovieDetailFragment extends Fragment {
     private WebView trailerWebView;
     private RecyclerView reviewsRecyclerView;
     private ReviewRecyclerViewAdapter reviewAdapter;
+    private CheckBox watchlistCheckBox, watchedCheckBox;
+    private RatingBar ratingBar;
+    private EditText reviewEditText;
 
     @Nullable
     @Override
@@ -57,6 +68,7 @@ public class MovieDetailFragment extends Fragment {
             if (movieId != -1) {
                 observeMovieDetails(movieId);
                 observeMovieReviewsAndUsernames(movieId);
+                setupInteractions(movieId);
             }
         }
     }
@@ -78,6 +90,10 @@ public class MovieDetailFragment extends Fragment {
         descriptionTextView = view.findViewById(R.id.descriptionTextView);
         trailerWebView = view.findViewById(R.id.trailerWebView);
         reviewsRecyclerView = view.findViewById(R.id.reviewsRecyclerView);
+        watchlistCheckBox = view.findViewById(R.id.watchlistCheckBox);
+        watchedCheckBox = view.findViewById(R.id.watchedCheckBox);
+        ratingBar = view.findViewById(R.id.ratingBar);
+        reviewEditText = view.findViewById(R.id.reviewEditText);
     }
 
     private void observeMovieDetails(int movieId) {
@@ -133,7 +149,6 @@ public class MovieDetailFragment extends Fragment {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
             trailerWebView.clearCache(true);
-
             trailerWebView.loadUrl(embedUrl);
         }
     }
@@ -143,5 +158,56 @@ public class MovieDetailFragment extends Fragment {
             return youtubeUrl.replace("watch?v=", "embed/");
         }
         return youtubeUrl;
+    }
+
+    private void setupInteractions(int movieId) {
+        int userId = LoginFragment.loggedInUserID;
+
+        watchlistCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                movieDetailViewModel.addToWatchlist(userId, movieId);
+                Toast.makeText(requireContext(), "Added to Watchlist", Toast.LENGTH_SHORT).show();
+            } else {
+                movieDetailViewModel.removeFromWatchlist(userId, movieId);
+                Toast.makeText(requireContext(), "Removed from Watchlist", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        watchedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                movieDetailViewModel.addToWatchedList(userId, movieId);
+                Toast.makeText(requireContext(), "Marked as Watched", Toast.LENGTH_SHORT).show();
+            } else {
+                movieDetailViewModel.removeFromWatchedList(userId, movieId);
+                Toast.makeText(requireContext(), "Unmarked as Watched", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        getView().findViewById(R.id.submitReviewButton).setOnClickListener(v -> {
+            String reviewText = reviewEditText.getText().toString().trim();
+            float rating = ratingBar.getRating();
+
+            if (!reviewText.isEmpty() && rating > 0) {
+                Review review = new Review();
+                review.setMovieId(movieId);
+                review.setUserId(userId);
+                review.setReviewText(reviewText);
+                review.setRating((int) rating);
+                review.setReviewDate(getCurrentDate());
+
+                reviewViewModel.submitReview(review);
+                Toast.makeText(requireContext(), "Review submitted!", Toast.LENGTH_SHORT).show();
+
+                reviewEditText.setText("");
+                ratingBar.setRating(5);
+            } else {
+                Toast.makeText(requireContext(), "Please provide a rating and review text.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private String getCurrentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return dateFormat.format(new Date());
     }
 }

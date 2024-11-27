@@ -16,7 +16,7 @@ public interface ReviewsDAO {
 
     // Insert a new review into the database
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Review review);
+    void insertReview(Review review);
 
     @Query("SELECT * FROM reviews WHERE movie_id = :movieId ORDER BY review_date DESC")
     LiveData<List<Review>> getReviewsByMovieId(int movieId);
@@ -30,22 +30,11 @@ public interface ReviewsDAO {
 
     @Query("SELECT userinfo.username FROM reviews INNER JOIN userinfo ON reviews.user_id = userinfo.user_id WHERE reviews.movie_id = :movieId ORDER BY review_date DESC")
     LiveData<List<String>> getUsernamesByMovieId(int movieId);
-
-    @Query("SELECT reviews.*, movie.title AS movieName " +
-            "FROM reviews " +
-            "INNER JOIN movie ON reviews.movie_id = movie.movie_id " +
-            "WHERE reviews.user_id = :userId " +
-            "ORDER BY review_date DESC")
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    LiveData<List<Review>> getReviewsByUserId(int userId);
+    @Query("SELECT reviews.*, movie.title FROM reviews INNER JOIN movie ON reviews.movie_id = movie.movie_id WHERE reviews.user_id = :userId ORDER BY review_date DESC")
+    LiveData<List<Review>> getUserReviewsWithMovieNamesByUserId(int userId);
 
-    @Query("SELECT reviews.*, movie.title AS movieName " +
-            "FROM reviews " +
-            "INNER JOIN movie ON reviews.movie_id = movie.movie_id " +
-            "WHERE reviews.user_id = :userId " +
-            "ORDER BY reviews.review_date DESC")
-    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    LiveData<List<Review>> getUserReviewsWithMovieNames(int userId);
-
+    @Query("SELECT movie.title FROM reviews INNER JOIN movie ON reviews.movie_id = movie.movie_id WHERE reviews.user_id = :userId ORDER BY review_date DESC")
+    LiveData<List<String>> getMovienamesByUserId(int userId);
 
 }

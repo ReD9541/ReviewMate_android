@@ -14,8 +14,10 @@ import com.example.reviewmate.model.Userinfo;
 import java.util.List;
 
 public class ProfileViewModel extends AndroidViewModel {
+
     private final UserRepository userRepository;
 
+    // Required Constructor
     public ProfileViewModel(@NonNull Application application) {
         super(application);
         userRepository = new UserRepository(application);
@@ -28,11 +30,16 @@ public class ProfileViewModel extends AndroidViewModel {
     public LiveData<List<Movie>> getMoviesWatched(int userId) {
         return userRepository.getMoviesWatchedByUserId(userId);
     }
+
     public LiveData<List<Movie>> getMoviesWatchlisted(int userId) {
         return userRepository.getMoviesWatchlistedByUserID(userId);
     }
 
-    public LiveData<List<Review>> getUserReviews(int userId) {
-        return userRepository.getUserReviewsByUserId(userId);
+    public LiveData<List<Review>> getUserReviewsWithMovieNamesByUserId(int userId) {
+        return userRepository.getUserReviewsWithMovieNamesByUserId(userId);
+    }
+
+    public LiveData<List<String>> getmovienamesbyUserId(int movieId) {
+        return userRepository.getMovienamesByUserId(movieId);
     }
 }

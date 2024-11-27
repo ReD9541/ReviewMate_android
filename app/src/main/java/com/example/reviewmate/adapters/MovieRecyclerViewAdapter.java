@@ -1,4 +1,4 @@
-package com.example.reviewmate.movie;
+package com.example.reviewmate.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.reviewmate.databinding.MovieSnippetsBinding;
 import com.example.reviewmate.model.Movie;
+import com.example.reviewmate.viewholder.MovieViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

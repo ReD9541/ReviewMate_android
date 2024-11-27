@@ -27,7 +27,7 @@ public class LoginFragment extends Fragment {
     // Global variables for logged-in user info
     public static String loggedInUserEmail;
     public static String loggedInUserName;
-
+    public static Integer loggedInUserID;
     private final String successfulLoginMessage = "Welcome, you're logged in";
     private final String invalidEmailOrPasswordMessage = "Invalid email or password";
 
@@ -83,7 +83,7 @@ public class LoginFragment extends Fragment {
                             if (user != null) {
                                 loggedInUserEmail = user.getEmail();
                                 loggedInUserName = user.getUsername();
-
+                                loggedInUserID = user.getId();
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("USER_DETAILS", user);
 

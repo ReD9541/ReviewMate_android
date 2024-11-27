@@ -115,9 +115,9 @@ public abstract class ReviewMateRoomDatabase extends RoomDatabase {
 
             // Reviews Initialization
             ReviewsDAO reviewsDAO = instance.reviewsDAO();
-            reviewsDAO.insert(new Review(1, 1, 5, "This is one of the best movies", "2024-11-10"));
-            reviewsDAO.insert(new Review(2, 2, 4, "Nice one!", "2024-11-09"));
-            reviewsDAO.insert(new Review(3, 2, 5, "Outstanding movie!", "2024-11-08"));
+            reviewsDAO.insertReview(new Review(1, 1, 5, "This is one of the best movies", "2024-11-10"));
+            reviewsDAO.insertReview(new Review(2, 2, 4, "Nice one!", "2024-11-09"));
+            reviewsDAO.insertReview(new Review(3, 2, 5, "Outstanding movie!", "2024-11-08"));
 
             // Watchlist Initialization
             WatchlistDAO watchlistDAO = instance.watchlistDAO();

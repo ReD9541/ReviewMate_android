@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +15,13 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.reviewmate.R;
+import com.example.reviewmate.adapters.ProfileMoviesAdapter;
+import com.example.reviewmate.adapters.ProfileReviewsAdapter;
 import com.example.reviewmate.databinding.ProfileFragmentBinding;
 import com.example.reviewmate.login.LoginFragment;
 import com.example.reviewmate.model.Movie;
-import com.example.reviewmate.model.Review;
 import com.example.reviewmate.model.Userinfo;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
 
     private ProfileMoviesAdapter moviesWatchedAdapter;
     private ProfileMoviesAdapter moviesWatchlistedAdapter;
-    private ProfileReviewsAdapter reviewsAdapter;
+    private ProfileReviewsAdapter profileReviewsAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -45,7 +45,11 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        profileViewModel = new ViewModelProvider(
+                this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())
+        ).get(ProfileViewModel.class);
+
 
         populateUserInfo();
         setupRecyclerViews();
@@ -56,6 +60,7 @@ public class ProfileFragment extends Fragment {
                     if (userinfo != null) {
                         updateAdditionalUserInfo(userinfo);
                         loadUserSpecificData(userId);
+                        observeMovieReviewsAndMovieNames(userId);
                     } else {
                         Toast.makeText(requireContext(), "User information not found", Toast.LENGTH_SHORT).show();
                     }
@@ -110,46 +115,50 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    private void navigateToMovieDetail(Movie movie) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("MOVIE_ID", movie.getMovieId());
+        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_movieDetailFragment, bundle);
+    }
     private void setupRecyclerViews() {
         // Movies Watched RecyclerView
-        moviesWatchedAdapter = new ProfileMoviesAdapter();
+        moviesWatchedAdapter = new ProfileMoviesAdapter(movie -> navigateToMovieDetail(movie));
         binding.moviesWatchedRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.moviesWatchedRecyclerView.setAdapter(moviesWatchedAdapter);
 
         // Movies Watchlisted RecyclerView
-        moviesWatchlistedAdapter = new ProfileMoviesAdapter();
-        binding.watchlistRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.watchlistRecyclerView.setAdapter(moviesWatchlistedAdapter);
+        moviesWatchlistedAdapter = new ProfileMoviesAdapter(movie -> navigateToMovieDetail(movie));
+        binding.moviesWatchlistRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.moviesWatchlistRecyclerView.setAdapter(moviesWatchlistedAdapter);
 
         // User Reviews RecyclerView
-        reviewsAdapter = new ProfileReviewsAdapter();
+        profileReviewsAdapter = new ProfileReviewsAdapter();
         binding.userReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.userReviewsRecyclerView.setAdapter(reviewsAdapter);
+        binding.userReviewsRecyclerView.setAdapter(profileReviewsAdapter);
     }
-
     private void loadUserSpecificData(int userId) {
-        // Load Movies Watched
         profileViewModel.getMoviesWatched(userId).observe(getViewLifecycleOwner(), movies -> {
             if (movies != null) {
                 moviesWatchedAdapter.submitList(movies);
             }
         });
-
-        // Load Movies Watchlisted
         profileViewModel.getMoviesWatchlisted(userId).observe(getViewLifecycleOwner(), movies -> {
             if (movies != null) {
                 moviesWatchlistedAdapter.submitList(movies);
             }
         });
-
-        // Load User Reviews
-        profileViewModel.getUserReviews(userId).observe(getViewLifecycleOwner(), reviews -> {
+    }
+    private void observeMovieReviewsAndMovieNames(int userId) {
+        profileViewModel.getUserReviewsWithMovieNamesByUserId(userId).observe(getViewLifecycleOwner(), reviews -> {
             if (reviews != null) {
-                reviewsAdapter.submitList(reviews);
+                profileViewModel.getmovienamesbyUserId(userId).observe(getViewLifecycleOwner(), movieNames -> {
+                    if (movieNames != null && movieNames.size() == reviews.size()) {
+                        profileReviewsAdapter.submitList(reviews, movieNames);
+                    }
+                });
             }
         });
     }
-
     private void handleLogout() {
         sharedViewModel.clearUserId();
         NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_loginFragment);
@@ -161,4 +170,5 @@ public class ProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

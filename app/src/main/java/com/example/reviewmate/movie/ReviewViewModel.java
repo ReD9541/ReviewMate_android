@@ -12,7 +12,6 @@ import com.example.reviewmate.model.Review;
 import java.util.List;
 
 public class ReviewViewModel extends AndroidViewModel {
-
     private final ReviewRepository reviewRepository;
 
     public ReviewViewModel(@NonNull Application application) {
@@ -26,5 +25,9 @@ public class ReviewViewModel extends AndroidViewModel {
 
     public LiveData<List<String>> getUsernamesByMovieId(int movieId) {
         return reviewRepository.getUsernamesByMovieId(movieId);
+    }
+
+    public void submitReview(Review review) {
+        reviewRepository.addReview(review);
     }
 }

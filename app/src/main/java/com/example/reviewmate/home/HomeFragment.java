@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.reviewmate.R;
 import com.example.reviewmate.databinding.HomeFragmentBinding;
-import com.example.reviewmate.movie.MovieRecyclerViewAdapter;
+import com.example.reviewmate.adapters.MovieRecyclerViewAdapter;
 import com.example.reviewmate.model.Movie;
 
 public class HomeFragment extends Fragment {

@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.example.reviewmate.dao.ReviewsDAO;
-import com.example.reviewmate.data.ReviewMateRoomDatabase;
 import com.example.reviewmate.model.Review;
 
 import java.util.List;
@@ -35,10 +34,11 @@ public class ReviewRepository {
     }
 
     public void addReview(Review review) {
-        executorService.execute(() -> reviewsDAO.insert(review));
+        executorService.execute(() -> reviewsDAO.insertReview(review));
     }
 
     public void deleteReview(int reviewId) {
         executorService.execute(() -> reviewsDAO.deleteReviewById(reviewId));
     }
+
 }

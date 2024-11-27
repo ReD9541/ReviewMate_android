@@ -102,16 +102,14 @@ public class UserRepository {
     public LiveData<List<Movie>> getMoviesWatchedByUserId(int userId) {
         return movieDAO.getMoviesWatchedByUserId(userId);
     }
-
     public LiveData<List<Movie>> getMoviesWatchlistedByUserID(int userid){
         return movieDAO.getMoviesWatchlistedByUserId(userid);
     }
-    public LiveData<List<Review>> getUserReviewsWithMovieNames(int userId) {
-        return reviewsDAO.getUserReviewsWithMovieNames(userId);
-    }
-    public LiveData<List<Review>> getUserReviewsByUserId(int userId) {
-        return reviewsDAO.getReviewsByUserId(userId);
-    }
 
-
+    public LiveData<List<Review>> getUserReviewsWithMovieNamesByUserId(int userId) {
+        return reviewsDAO.getUserReviewsWithMovieNamesByUserId(userId);
+    }
+    public LiveData<List<String>> getMovienamesByUserId(int user_id) {
+        return reviewsDAO.getMovienamesByUserId(user_id);
+    }
 }

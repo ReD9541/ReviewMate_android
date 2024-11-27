@@ -1,11 +1,15 @@
 package com.example.reviewmate.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RoomWarnings;
 import androidx.room.Update;
 
+import com.example.reviewmate.model.Movie;
 import com.example.reviewmate.model.MoviesWatched;
 
 import java.util.List;
@@ -27,4 +31,16 @@ public interface MoviesWatchedDAO {
 
     @Query("SELECT * FROM movies_watched")
     List<MoviesWatched> getAllMoviesWatched();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addMovieToWatchedList(MoviesWatched moviesWatched);
+
+    @Query("DELETE FROM movies_watched WHERE user_id = :userId AND movie_id = :movieId")
+    void removeMovieFromWatchedList(int userId, int movieId);
+
+    @Query("SELECT * FROM movies_watched WHERE user_id = :userId")
+    LiveData<List<MoviesWatched>> getWatchedListByUserId(int userId);
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("SELECT * FROM movie INNER JOIN movies_watched ON movie.movie_id = movies_watched.movie_id WHERE movies_watched.user_id = :userId")
+    LiveData<List<Movie>> getMoviesWatchedByUserId(int userId);
 }

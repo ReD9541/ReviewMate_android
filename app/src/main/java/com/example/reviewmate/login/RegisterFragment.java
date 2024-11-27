@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -44,6 +45,18 @@ public class RegisterFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
+        // Set up back button navigation
+        binding.registerButtonBack.setOnClickListener(v -> {
+            navigateBackToLogin();
+        });
+
+        // Handle Android's back button press
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                navigateBackToLogin();
+            }
+        });
 
         binding.registerButtonNext.setOnClickListener(v -> {
             if (validateInputs()) {
@@ -67,15 +80,20 @@ public class RegisterFragment extends Fragment {
 
                 mViewModel.registerUser(user, userinfo);
                 Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                NavHostFragment.findNavController(this).navigate(R.id.action_registerFragment_to_loginFragment);
-            }
+                navigateBackToLogin();            }
         });
 
     }
+
+    private void navigateBackToLogin() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_registerFragment_to_loginFragment);
+    }
+
     public static String getCurrentFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(new Date());
     }
+
     private boolean validateInputs() {
         boolean isValid = true;
 

@@ -33,6 +33,12 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
 
     <fragment
@@ -74,5 +80,19 @@
         android:name="com.example.reviewmate.movie.MovieDetailFragment"
         android:label="movie_detail_fragment"
         tools:layout="@layout/movie_detail_fragment" />
+    <fragment
+        android:id="@+id/addMovieFragment"
+        android:name="com.example.reviewmate.movie.AddMovieFragment"
+        android:label="add_movie_fragment"
+        tools:layout="@layout/add_movie_fragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.reviewmate.profile.EditProfileFragment"
+        android:label="edit_profile_fragment"
+        tools:layout="@layout/edit_profile_fragment" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
 </navigation>

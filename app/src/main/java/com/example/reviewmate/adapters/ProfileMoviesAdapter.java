@@ -1,4 +1,4 @@
-package com.example.reviewmate.profile;
+package com.example.reviewmate.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -17,10 +17,22 @@ import java.util.List;
 public class ProfileMoviesAdapter extends RecyclerView.Adapter<ProfileMoviesAdapter.MovieViewHolder> {
 
     private final List<Movie> movies = new ArrayList<>();
+    private final OnMovieClickListener onMovieClickListener;
+
+    // Interface for handling click events
+    public interface OnMovieClickListener {
+        void onMovieClick(Movie movie);
+    }
+
+    public ProfileMoviesAdapter(OnMovieClickListener onMovieClickListener) {
+        this.onMovieClickListener = onMovieClickListener;
+    }
 
     public void submitList(List<Movie> movieList) {
         movies.clear();
-        movies.addAll(movieList);
+        if (movieList != null) {
+            movies.addAll(movieList);
+        }
         notifyDataSetChanged();
     }
 
@@ -29,7 +41,7 @@ public class ProfileMoviesAdapter extends RecyclerView.Adapter<ProfileMoviesAdap
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         MovieSnippetsBinding binding = MovieSnippetsBinding.inflate(inflater, parent, false);
-        return new MovieViewHolder(binding);
+        return new MovieViewHolder(binding, onMovieClickListener);
     }
 
     @Override
@@ -44,16 +56,19 @@ public class ProfileMoviesAdapter extends RecyclerView.Adapter<ProfileMoviesAdap
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
         private final MovieSnippetsBinding binding;
+        private final OnMovieClickListener onMovieClickListener;
 
-        public MovieViewHolder(@NonNull MovieSnippetsBinding binding) {
+        public MovieViewHolder(@NonNull MovieSnippetsBinding binding, OnMovieClickListener onMovieClickListener) {
             super(binding.getRoot());
             this.binding = binding;
+            this.onMovieClickListener = onMovieClickListener;
         }
 
         public void bind(Movie movie) {
-            // Set the movie title
+            // Set movie title
             binding.titleTextView.setText(movie.getTitle());
 
+            // Load poster image using Picasso
             if (movie.getPosterUrl() != null && !movie.getPosterUrl().isEmpty()) {
                 Picasso.get()
                         .load(movie.getPosterUrl())
@@ -61,9 +76,15 @@ public class ProfileMoviesAdapter extends RecyclerView.Adapter<ProfileMoviesAdap
                         .error(R.drawable.ic_default_poster)
                         .into(binding.posterImageView);
             } else {
-
                 binding.posterImageView.setImageResource(R.drawable.ic_default_poster);
             }
+
+            // Handle click events
+            itemView.setOnClickListener(v -> {
+                if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    onMovieClickListener.onMovieClick(movie);
+                }
+            });
         }
     }
 }

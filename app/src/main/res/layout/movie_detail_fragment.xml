@@ -238,34 +238,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/trailerWebView">
 
-                    <RadioGroup
-                        android:id="@+id/radioGroupWatchStatus"
+
+                    <CheckBox
+                        android:id="@+id/watchlistCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="8dp"
+                        android:text="WATCHLIST"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <CheckBox
+                        android:id="@+id/watchedCheckBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:text="WATCHED"
+                        app:layout_constraintBottom_toBottomOf="@+id/watchlistCheckBox"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <RadioButton
-                            android:id="@+id/watchlistRadioButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="8dp"
-                            android:text="WATCHLIST" />
-
-                        <!-- Watched RadioButton -->
-                        <RadioButton
-                            android:id="@+id/watchedRadioButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="WATCHED" />
-
-                    </RadioGroup>
-
+                        app:layout_constraintTop_toTopOf="@+id/watchlistCheckBox"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <RatingBar
                         android:id="@+id/ratingBar"
@@ -280,7 +274,7 @@
                         android:theme="@style/Widget.AppCompat.RatingBar.Indicator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/radioGroupWatchStatus" />
+                        app:layout_constraintTop_toBottomOf="@+id/watchedCheckBox" />
 
                     <EditText
                         android:id="@+id/reviewEditText"
@@ -296,10 +290,12 @@
 
                     <Button
                         android:id="@+id/submitReviewButton"
+                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="SUMBIT"
+                        app:iconTintMode="add"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/reviewEditText" />

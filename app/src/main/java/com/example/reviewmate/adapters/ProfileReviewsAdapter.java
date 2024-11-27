@@ -1,4 +1,4 @@
-package com.example.reviewmate.profile;
+package com.example.reviewmate.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.reviewmate.databinding.ItemReviewBinding;
+import com.example.reviewmate.databinding.ProfileReviewBinding;
 import com.example.reviewmate.model.Review;
 
 import java.util.ArrayList;
@@ -15,10 +15,17 @@ import java.util.List;
 public class ProfileReviewsAdapter extends RecyclerView.Adapter<ProfileReviewsAdapter.ReviewViewHolder> {
 
     private final List<Review> reviews = new ArrayList<>();
+    private final List<String> movieNames = new ArrayList<>();
 
-    public void submitList(List<Review> reviewList) {
+    public void submitList(List<Review> reviewList, List<String> movieNameList) {
         reviews.clear();
-        reviews.addAll(reviewList);
+        movieNames.clear();
+
+        if (reviewList != null && movieNameList != null && reviewList.size() == movieNameList.size()) {
+            reviews.addAll(reviewList);
+            movieNames.addAll(movieNameList);
+        }
+
         notifyDataSetChanged();
     }
 
@@ -26,13 +33,17 @@ public class ProfileReviewsAdapter extends RecyclerView.Adapter<ProfileReviewsAd
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemReviewBinding binding = ItemReviewBinding.inflate(inflater, parent, false);
+        ProfileReviewBinding binding = ProfileReviewBinding.inflate(inflater, parent, false);
         return new ReviewViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        holder.bind(reviews.get(position));
+        if (position < reviews.size() && position < movieNames.size()) {
+            Review review = reviews.get(position);
+            String movieName = movieNames.get(position);
+            holder.bind(review, movieName);
+        }
     }
 
     @Override
@@ -41,18 +52,15 @@ public class ProfileReviewsAdapter extends RecyclerView.Adapter<ProfileReviewsAd
     }
 
     static class ReviewViewHolder extends RecyclerView.ViewHolder {
-        private final ItemReviewBinding binding;
+        private final ProfileReviewBinding binding;
 
-        public ReviewViewHolder(@NonNull ItemReviewBinding binding) {
+        public ReviewViewHolder(@NonNull ProfileReviewBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(Review review) {
-            // Set the movie name instead of username
-            binding.usernameTextView.setText(review.getMovieName());
-
-            // Set other review details
+        public void bind(Review review, String movieName) {
+            binding.movienameTextView.setText(movieName);
             binding.reviewRatingBar.setRating(review.getRating());
             binding.reviewDateTextView.setText(review.getReviewDate());
             binding.reviewTextView.setText(review.getReviewText());

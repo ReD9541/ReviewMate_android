@@ -1,4 +1,4 @@
-package com.example.reviewmate.movie;
+package com.example.reviewmate.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
