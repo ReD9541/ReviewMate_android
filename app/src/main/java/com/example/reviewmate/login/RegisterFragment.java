@@ -18,6 +18,10 @@ import com.example.reviewmate.databinding.RegisterFragmentBinding;
 import com.example.reviewmate.model.User;
 import com.example.reviewmate.model.Userinfo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class RegisterFragment extends Fragment {
 
     private RegisterViewModel mViewModel;
@@ -40,15 +44,13 @@ public class RegisterFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
-        // Handle "Finish" button click
+
         binding.registerButtonNext.setOnClickListener(v -> {
             if (validateInputs()) {
                 User user = new User(
-                        binding.registerEmailTIL.getEditText().getText().toString().trim(),
+                        binding.registerUsernameTIL.getEditText().getText().toString().trim(),
                         binding.registerPasswordTIL.getEditText().getText().toString().trim(),
-                        binding.registerFirstNameTIL.getEditText().getText().toString().trim() ,
-                                binding.registerLastNameTIL.getEditText().getText().toString().trim()+
-                                        binding.registerUsernameTIL.getEditText().getText().toString().trim()
+                        binding.registerEmailTIL.getEditText().getText().toString().trim()
                 );
 
                 Userinfo userinfo = new Userinfo(
@@ -59,18 +61,21 @@ public class RegisterFragment extends Fragment {
                         binding.registerCountryTIL.getEditText().getText().toString().trim(),
                         binding.registerAddressTIL.getEditText().getText().toString().trim(),
                         binding.registerBioTIL.getEditText().getText().toString().trim(),
-                        String.valueOf(System.currentTimeMillis()),
+                        getCurrentFormattedDate(),
                         "profile_picture_url_placeholder"
                 );
 
                 mViewModel.registerUser(user, userinfo);
                 Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-
                 NavHostFragment.findNavController(this).navigate(R.id.action_registerFragment_to_loginFragment);
             }
         });
-    }
 
+    }
+    public static String getCurrentFormattedDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return dateFormat.format(new Date());
+    }
     private boolean validateInputs() {
         boolean isValid = true;
 

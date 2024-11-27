@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RoomWarnings;
 import androidx.room.Update;
 
 import com.example.reviewmate.model.Movie;
@@ -36,4 +37,11 @@ public interface MovieDAO {
     LiveData<List<Movie>> getLatestMovies();
     @Query("SELECT * FROM movie WHERE movie_id = :movieId")
     LiveData<Movie> getMovieDetails(int movieId);
+    @Query("SELECT * FROM movie INNER JOIN movies_watched ON movie.movie_id = movies_watched.movie_id WHERE movies_watched.user_id = :userId")
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    LiveData<List<Movie>> getMoviesWatchedByUserId(int userId);
+
+    @Query("SELECT * FROM movie INNER JOIN watchlist ON movie.movie_id = watchlist .movie_id WHERE watchlist.user_id = :userId")
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    LiveData<List<Movie>> getMoviesWatchlistedByUserId(int userId);
 }

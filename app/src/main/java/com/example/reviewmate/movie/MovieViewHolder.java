@@ -22,22 +22,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     public void bind(Movie movie, MovieRecyclerViewAdapter.OnMovieClickListener onItemClickListener) {
         binding.titleTextView.setText(movie.getTitle());
 
-        binding.imdbRatingTextView.setText("IMDb Rating: " + movie.getImdbRating());
-
-        if (movie.getReleaseDate() != null && !movie.getReleaseDate().isEmpty()) {
-            binding.releaseDateTextView.setVisibility(View.VISIBLE);
-            binding.releaseDateTextView.setText("Release Date: " + movie.getReleaseDate());
-        } else {
-            binding.releaseDateTextView.setVisibility(View.GONE);
-        }
-
-        if (movie.getRuntime() != null && movie.getRuntime() > 0) {
-            binding.runtimeTextView.setVisibility(View.VISIBLE);
-            binding.runtimeTextView.setText("Runtime: " + movie.getRuntime() + " min");
-        } else {
-            binding.runtimeTextView.setVisibility(View.GONE);
-        }
-
+        // Bind poster using Picasso
         if (movie.getPosterUrl() != null && !movie.getPosterUrl().isEmpty()) {
             Picasso.get()
                     .load(movie.getPosterUrl())

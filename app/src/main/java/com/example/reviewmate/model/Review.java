@@ -54,6 +54,9 @@ public class Review implements Serializable {
     private transient String username;
 
     @Ignore
+    private transient String moviename;
+
+    @Ignore
     public Review() {
     }
 
@@ -134,5 +137,14 @@ public class Review implements Serializable {
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     public void setUsername(String username) {
         this.username = username;
+    }
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    public String getMovieName() {
+        return moviename;
+    }
+
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    public void setMovieName(String movieName) {
+        this.moviename = movieName;
     }
 }

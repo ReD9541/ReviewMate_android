@@ -4,8 +4,12 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.reviewmate.dao.MovieDAO;
+import com.example.reviewmate.dao.ReviewsDAO;
 import com.example.reviewmate.dao.UserDAO;
 import com.example.reviewmate.dao.UserinfoDAO;
+import com.example.reviewmate.model.Movie;
+import com.example.reviewmate.model.Review;
 import com.example.reviewmate.model.User;
 import com.example.reviewmate.model.Userinfo;
 
@@ -15,29 +19,28 @@ import java.util.concurrent.ExecutorService;
 public class UserRepository {
     private final UserDAO userDAO;
     private final UserinfoDAO userinfoDAO;
+    private final MovieDAO movieDAO;
+    private final ReviewsDAO reviewsDAO;
     private final ExecutorService executorService;
 
     public UserRepository(Application application) {
         ReviewMateRoomDatabase db = ReviewMateRoomDatabase.getDatabase(application);
         userDAO = db.userDAO();
         userinfoDAO = db.userinfoDAO();
+        movieDAO = db.movieDAO();
+        reviewsDAO = db.reviewsDAO();
         executorService = ReviewMateRoomDatabase.databaseWriteExecutor;
     }
 
     // Insert user and userinfo
     public void insertUserWithUserinfo(User user, Userinfo userinfo) {
         executorService.execute(() -> {
-            // Insert User and retrieve its ID
-            userDAO.insert(user);
-            Integer userId = user.getId(); // Assuming Room auto-generates the ID
-
-            // Update userinfo with the generated user ID
-            userinfo.setUserId(userId);
+            long userId = userDAO.insert(user);
+            userinfo.setUserId((int) userId);
             userinfoDAO.insert(userinfo);
         });
     }
 
-    // Update user and userinfo
     public void updateUserWithUserinfo(User user, Userinfo userinfo) {
         executorService.execute(() -> {
             userDAO.update(user);
@@ -68,7 +71,6 @@ public class UserRepository {
         return userDAO.findByEmail(email);
     }
 
-    // Single Userinfo Operations
     public LiveData<Userinfo> getUserinfoByUserId(int userId) {
         return userinfoDAO.getUserinfoByUserId(userId);
     }
@@ -84,16 +86,32 @@ public class UserRepository {
     public void deleteUserinfo(Userinfo userinfo) {
         executorService.execute(() -> userinfoDAO.delete(userinfo));
     }
+
     public void insertUser(User user) {
         executorService.execute(() -> userDAO.insert(user));
     }
 
     public void deleteUser(User user) {
         executorService.execute(() -> userDAO.delete(user));
-
     }
+
     public void updateUser(User user) {
         executorService.execute(() -> userDAO.update(user));
     }
+
+    public LiveData<List<Movie>> getMoviesWatchedByUserId(int userId) {
+        return movieDAO.getMoviesWatchedByUserId(userId);
+    }
+
+    public LiveData<List<Movie>> getMoviesWatchlistedByUserID(int userid){
+        return movieDAO.getMoviesWatchlistedByUserId(userid);
+    }
+    public LiveData<List<Review>> getUserReviewsWithMovieNames(int userId) {
+        return reviewsDAO.getUserReviewsWithMovieNames(userId);
+    }
+    public LiveData<List<Review>> getUserReviewsByUserId(int userId) {
+        return reviewsDAO.getReviewsByUserId(userId);
+    }
+
 
 }

@@ -22,6 +22,7 @@ public class RegisterViewModel extends AndroidViewModel {
         repository.insertUserWithUserinfo(user, userinfo);
     }
 
+
     public void updateUser(User user, Userinfo userinfo) {
         repository.updateUserWithUserinfo(user, userinfo);
     }

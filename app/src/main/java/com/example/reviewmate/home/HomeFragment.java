@@ -47,7 +47,6 @@ public class HomeFragment extends Fragment {
 
         setupRecyclerViews();
 
-        // Observe the movies LiveData from ViewModel
         homeViewModel.getTopRatedMovies().observe(getViewLifecycleOwner(), movies -> {
             topRatedAdapter.submitList(movies);
         });
@@ -58,23 +57,27 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViews() {
-        // Set up the adapters for the RecyclerViews
-        topRatedAdapter = new MovieRecyclerViewAdapter(movie -> navigateToMovieDetail(movie), R.layout.movie_snippets);
-        latestAdapter = new MovieRecyclerViewAdapter(movie -> navigateToMovieDetail(movie), R.layout.movie_snippets);
-
-        binding.topRatedMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        // Top Rated Movies RecyclerView
+        topRatedAdapter = new MovieRecyclerViewAdapter(movie -> navigateToMovieDetail(movie));
+        binding.topRatedMoviesRecyclerView.setLayoutManager(
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false)
+        );
         binding.topRatedMoviesRecyclerView.setAdapter(topRatedAdapter);
 
-        binding.latestMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        // Latest Movies RecyclerView
+        latestAdapter = new MovieRecyclerViewAdapter(movie -> navigateToMovieDetail(movie));
+        binding.latestMoviesRecyclerView.setLayoutManager(
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false)
+        );
         binding.latestMoviesRecyclerView.setAdapter(latestAdapter);
     }
+
 
     private void navigateToMovieDetail(Movie movie) {
         Bundle bundle = new Bundle();
         bundle.putInt("MOVIE_ID", movie.getMovieId());
         Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_movieDetailFragment, bundle);
     }
-
 
     @Override
     public void onDestroyView() {

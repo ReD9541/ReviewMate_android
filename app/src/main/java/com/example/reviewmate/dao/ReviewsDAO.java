@@ -21,9 +21,6 @@ public interface ReviewsDAO {
     @Query("SELECT * FROM reviews WHERE movie_id = :movieId ORDER BY review_date DESC")
     LiveData<List<Review>> getReviewsByMovieId(int movieId);
 
-    @Query("SELECT * FROM reviews WHERE user_id = :userId ORDER BY review_date DESC")
-    LiveData<List<Review>> getReviewsByUserId(int userId);
-
     @Query("DELETE FROM reviews WHERE review_id = :reviewId")
     void deleteReviewById(int reviewId);
 
@@ -33,4 +30,22 @@ public interface ReviewsDAO {
 
     @Query("SELECT userinfo.username FROM reviews INNER JOIN userinfo ON reviews.user_id = userinfo.user_id WHERE reviews.movie_id = :movieId ORDER BY review_date DESC")
     LiveData<List<String>> getUsernamesByMovieId(int movieId);
+
+    @Query("SELECT reviews.*, movie.title AS movieName " +
+            "FROM reviews " +
+            "INNER JOIN movie ON reviews.movie_id = movie.movie_id " +
+            "WHERE reviews.user_id = :userId " +
+            "ORDER BY review_date DESC")
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    LiveData<List<Review>> getReviewsByUserId(int userId);
+
+    @Query("SELECT reviews.*, movie.title AS movieName " +
+            "FROM reviews " +
+            "INNER JOIN movie ON reviews.movie_id = movie.movie_id " +
+            "WHERE reviews.user_id = :userId " +
+            "ORDER BY reviews.review_date DESC")
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    LiveData<List<Review>> getUserReviewsWithMovieNames(int userId);
+
+
 }
