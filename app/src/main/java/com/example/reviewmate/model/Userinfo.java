@@ -51,12 +51,10 @@ public class Userinfo implements Serializable {
     @ColumnInfo(name = "pfp_url")
     private String profilePictureUrl;
 
-    // Default no-argument constructor (Ignored by Room)
     @Ignore
     public Userinfo() {
     }
 
-    // Constructor without `rowId` and `username`
     @Ignore
     public Userinfo(Integer userId, String firstName, String lastName, String country, String address, String bio, String joinedOn, String profilePictureUrl) {
         this.userId = userId;
@@ -69,7 +67,6 @@ public class Userinfo implements Serializable {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    // Full parameter constructor
     public Userinfo(Integer userId, String firstName, String lastName, String username, String country, String address, String bio, String joinedOn, String profilePictureUrl) {
         this.userId = userId;
         this.firstName = firstName;

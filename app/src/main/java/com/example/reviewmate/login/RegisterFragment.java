@@ -80,7 +80,8 @@ public class RegisterFragment extends Fragment {
 
                 mViewModel.registerUser(user, userinfo);
                 Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                navigateBackToLogin();            }
+                navigateBackToLogin();
+            }
         });
 
     }

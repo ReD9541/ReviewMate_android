@@ -31,6 +31,7 @@ public interface WatchlistDAO {
 
     @Query("SELECT * FROM watchlist")
     List<Watchlist> getAllWatchlist();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addToWatchlist(Watchlist watchlist);
 
@@ -39,6 +40,7 @@ public interface WatchlistDAO {
 
     @Query("SELECT * FROM watchlist WHERE user_id = :userId")
     LiveData<List<Watchlist>> getWatchlistByUserId(int userId);
+
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM movie INNER JOIN watchlist ON movie.movie_id = watchlist.movie_id WHERE watchlist.user_id = :userId")
     LiveData<List<Movie>> getMoviesInWatchlist(int userId);

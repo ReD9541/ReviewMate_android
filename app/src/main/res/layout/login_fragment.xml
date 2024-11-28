@@ -1,5 +1,4 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,11 +6,10 @@
     tools:context=".login.LoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scrollableLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollableLayout">
+        android:layout_height="wrap_content">
 
-        <!-- Vertical Guidelines -->
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
@@ -26,7 +24,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".9" />
 
-        <!-- Horizontal Guideline in the middle -->
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
             android:layout_width="wrap_content"
@@ -34,7 +31,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent=".15" />
 
-        <!-- CardView starts from the middle -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,7 +46,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <!-- Login Title -->
                 <ImageView
                     android:id="@+id/appLogoImageView"
                     android:layout_width="100dp"
@@ -76,7 +71,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/appLogoImageView" />
 
-                <!-- Email Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/loginEmailTIL"
                     android:layout_width="0dp"
@@ -98,7 +92,6 @@
                         android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Password Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/loginPasswordTIL"
                     android:layout_width="0dp"
@@ -123,7 +116,6 @@
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Sign Up Button -->
                 <Button
                     android:id="@+id/loginSignUpButton"
                     style="@style/Widget.Material3.Button.TextButton"
@@ -135,7 +127,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/loginPasswordTIL" />
 
-                <!-- Login Button -->
                 <Button
                     android:id="@+id/loginLoginButton"
                     android:layout_width="0dp"

@@ -61,4 +61,8 @@ public interface MovieDAO {
 
     @Query("DELETE FROM movies_watched WHERE movie_id = :movieId AND user_id = :userId")
     void removeFromWatchedList(int movieId, int userId);
+
+    @Query("SELECT * FROM movie WHERE title LIKE :query OR description LIKE :query")
+    LiveData<List<Movie>> searchMovies(String query);
+
 }

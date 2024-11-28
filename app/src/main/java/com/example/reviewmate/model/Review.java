@@ -130,14 +130,17 @@ public class Review implements Serializable {
     public void setReviewDate(String reviewDate) {
         this.reviewDate = reviewDate;
     }
+
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     public String getUsername() {
         return username;
     }
+
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     public void setUsername(String username) {
         this.username = username;
     }
+
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     public String getMovieName() {
         return moviename;

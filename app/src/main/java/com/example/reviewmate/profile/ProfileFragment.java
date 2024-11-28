@@ -1,12 +1,14 @@
 package com.example.reviewmate.profile;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,6 +122,7 @@ public class ProfileFragment extends Fragment {
         bundle.putInt("MOVIE_ID", movie.getMovieId());
         Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_movieDetailFragment, bundle);
     }
+
     private void setupRecyclerViews() {
         // Movies Watched RecyclerView
         moviesWatchedAdapter = new ProfileMoviesAdapter(movie -> navigateToMovieDetail(movie));
@@ -136,6 +139,7 @@ public class ProfileFragment extends Fragment {
         binding.userReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.userReviewsRecyclerView.setAdapter(profileReviewsAdapter);
     }
+
     private void loadUserSpecificData(int userId) {
         profileViewModel.getMoviesWatched(userId).observe(getViewLifecycleOwner(), movies -> {
             if (movies != null) {
@@ -148,6 +152,7 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
     private void observeMovieReviewsAndMovieNames(int userId) {
         profileViewModel.getUserReviewsWithMovieNamesByUserId(userId).observe(getViewLifecycleOwner(), reviews -> {
             if (reviews != null) {
@@ -159,6 +164,7 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
     private void handleLogout() {
         sharedViewModel.clearUserId();
         NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_loginFragment);

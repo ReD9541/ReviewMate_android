@@ -19,6 +19,7 @@ public class Actor implements Serializable {
 
     @ColumnInfo(name = "bio_text")
     private String bioText;
+
     @Ignore
     public Actor(int actorId, String name, String bioText) {
     }
