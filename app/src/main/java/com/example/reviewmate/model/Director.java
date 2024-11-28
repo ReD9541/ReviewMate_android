@@ -19,6 +19,7 @@ public class Director implements Serializable {
 
     @ColumnInfo(name = "bio_text")
     private String bioText;
+
     @Ignore
     public Director(int directorId, String name, String bioText) {
     }

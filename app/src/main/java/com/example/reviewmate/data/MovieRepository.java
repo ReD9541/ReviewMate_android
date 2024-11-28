@@ -66,4 +66,9 @@ public class MovieRepository {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(new Date());
     }
+
+    public LiveData<List<Movie>> searchMovies(String query) {
+        return movieDAO.searchMovies("%" + query + "%");
+    }
+
 }

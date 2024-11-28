@@ -30,6 +30,7 @@ public interface ReviewsDAO {
 
     @Query("SELECT userinfo.username FROM reviews INNER JOIN userinfo ON reviews.user_id = userinfo.user_id WHERE reviews.movie_id = :movieId ORDER BY review_date DESC")
     LiveData<List<String>> getUsernamesByMovieId(int movieId);
+
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT reviews.*, movie.title FROM reviews INNER JOIN movie ON reviews.movie_id = movie.movie_id WHERE reviews.user_id = :userId ORDER BY review_date DESC")
     LiveData<List<Review>> getUserReviewsWithMovieNamesByUserId(int userId);

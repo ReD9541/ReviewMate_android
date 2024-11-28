@@ -1,12 +1,15 @@
 package com.example.reviewmate.login;
 
 import androidx.lifecycle.ViewModelProvider;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +27,7 @@ public class LoginFragment extends Fragment {
     private LoginViewModel mViewModel;
     private LoginFragmentBinding binding;
 
-    // Global variables for logged-in user info
+    // Global variables for logged-in user info (I should use SharedViewModel, but it breaks the app)
     public static String loggedInUserEmail;
     public static String loggedInUserName;
     public static Integer loggedInUserID;
@@ -37,6 +40,7 @@ public class LoginFragment extends Fragment {
 
         ReviewMateRoomDatabase.getDatabase(requireContext());
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -113,7 +117,6 @@ public class LoginFragment extends Fragment {
     }
 
 
-    // Validate Input Method
     private boolean validateInput(String email, String password) {
         boolean isValid = true;
 

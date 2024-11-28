@@ -19,7 +19,6 @@ public class ProfileMoviesAdapter extends RecyclerView.Adapter<ProfileMoviesAdap
     private final List<Movie> movies = new ArrayList<>();
     private final OnMovieClickListener onMovieClickListener;
 
-    // Interface for handling click events
     public interface OnMovieClickListener {
         void onMovieClick(Movie movie);
     }
@@ -79,7 +78,6 @@ public class ProfileMoviesAdapter extends RecyclerView.Adapter<ProfileMoviesAdap
                 binding.posterImageView.setImageResource(R.drawable.ic_default_poster);
             }
 
-            // Handle click events
             itemView.setOnClickListener(v -> {
                 if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                     onMovieClickListener.onMovieClick(movie);

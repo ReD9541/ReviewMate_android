@@ -40,6 +40,7 @@ public interface MoviesWatchedDAO {
 
     @Query("SELECT * FROM movies_watched WHERE user_id = :userId")
     LiveData<List<MoviesWatched>> getWatchedListByUserId(int userId);
+
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM movie INNER JOIN movies_watched ON movie.movie_id = movies_watched.movie_id WHERE movies_watched.user_id = :userId")
     LiveData<List<Movie>> getMoviesWatchedByUserId(int userId);

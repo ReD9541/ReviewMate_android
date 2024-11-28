@@ -47,14 +47,12 @@ public class MovieActor implements Serializable {
         this.actorId = actorId;
     }
 
-    // Constructor with all fields (including id)
     public MovieActor(Integer id, @NonNull Integer movieId, @NonNull Integer actorId) {
         this.id = id;
         this.movieId = movieId;
         this.actorId = actorId;
     }
 
-    // Getters and setters
     public Integer getId() {
         return id;
     }
