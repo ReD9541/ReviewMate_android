@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2" />
     </fragment>
 
     <fragment
@@ -36,6 +39,9 @@
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2" />
     </fragment>
 
     <fragment
@@ -69,7 +75,11 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.example.reviewmate.movie.MovieDetailFragment"
         android:label="movie_detail_fragment"
-        tools:layout="@layout/movie_detail_fragment" />
+        tools:layout="@layout/movie_detail_fragment" >
+        <action
+            android:id="@+id/action_movieDetailFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/addMovieFragment"
         android:name="com.example.reviewmate.movie.AddMovieFragment"
@@ -88,6 +98,10 @@
         android:id="@+id/searchFragment2"
         android:name="com.example.reviewmate.movie.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/search_fragment" />
+        tools:layout="@layout/search_fragment" >
+        <action
+            android:id="@+id/action_searchFragment2_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
 
 </navigation>

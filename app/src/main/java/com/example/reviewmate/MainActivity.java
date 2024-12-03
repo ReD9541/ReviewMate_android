@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentContainerView;
@@ -23,14 +22,25 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
+        setupWindowInsets();
         setupBottomNavigation();
     }
+
+    private void setupWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            int systemBarsInsetBottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
+            int imeInsetBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+
+            int bottomPadding = Math.max(systemBarsInsetBottom, imeInsetBottom);
+
+            if (bottomNavigationView != null) {
+                bottomNavigationView.setPadding(0, 0, 0, bottomPadding);
+            }
+
+            return insets;
+        });
+    }
+
 
     private void setupBottomNavigation() {
         bottomNavigationView = findViewById(R.id.bottom_navigation);

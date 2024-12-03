@@ -62,7 +62,14 @@ public interface MovieDAO {
     @Query("DELETE FROM movies_watched WHERE movie_id = :movieId AND user_id = :userId")
     void removeFromWatchedList(int movieId, int userId);
 
-    @Query("SELECT * FROM movie WHERE title LIKE :query OR description LIKE :query")
-    LiveData<List<Movie>> searchMovies(String query);
+    @Query("SELECT * FROM movie WHERE title LIKE :query AND genre LIKE :genre AND language LIKE :language")
+    LiveData<List<Movie>> searchMovies(String query, String genre, String language);
 
-}
+    @Query("SELECT DISTINCT genre FROM movie")
+
+    List<String> getAllGenres();
+
+    @Query("SELECT DISTINCT language FROM movie")
+    List<String> getAllLanguages();
+    }
+

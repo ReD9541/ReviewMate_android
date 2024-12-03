@@ -67,8 +67,16 @@ public class MovieRepository {
         return dateFormat.format(new Date());
     }
 
-    public LiveData<List<Movie>> searchMovies(String query) {
-        return movieDAO.searchMovies("%" + query + "%");
+    public LiveData<List<Movie>> searchMovies(String query, String genre, String language) {
+        return movieDAO.searchMovies("%" + query + "%", genre, language);
+    }
+
+    public List<String> getAllGenres() {
+        return movieDAO.getAllGenres();
+    }
+
+    public List<String> getAllLanguages() {
+        return movieDAO.getAllLanguages();
     }
 
 }
