@@ -21,19 +21,41 @@ public class MovieDetailViewModel extends AndroidViewModel {
         return movieRepository.getMovieDetails(movieId);
     }
 
-    public void addToWatchlist(int userId, int movieId) {
-        movieRepository.addToWatchlist(userId, movieId);
-    }
 
     public void removeFromWatchlist(int userId, int movieId) {
         movieRepository.removeFromWatchlist(userId, movieId);
+    }
+
+
+    public void removeFromWatchedList(int userId, int movieId) {
+        movieRepository.removeFromWatchedList(userId, movieId);
+    }
+
+    public LiveData<Boolean> isMovieInWatchlist(int userId, int movieId) {
+        return movieRepository.isMovieInWatchlist(userId, movieId);
+    }
+
+    public LiveData<Boolean> isMovieInWatchedList(int userId, int movieId) {
+        return movieRepository.isMovieInWatchedList(userId, movieId);
+    }
+
+    public LiveData<Boolean> hasReviewed(int userId, int movieId) {
+        return movieRepository.hasReviewed(userId, movieId);
+    }
+
+    public void addToWatchlist(int userId, int movieId) {
+        movieRepository.addToWatchlist(userId, movieId);
     }
 
     public void addToWatchedList(int userId, int movieId) {
         movieRepository.addToWatchedList(userId, movieId);
     }
 
-    public void removeFromWatchedList(int userId, int movieId) {
-        movieRepository.removeFromWatchedList(userId, movieId);
+    public LiveData<Boolean> isInWatchlist(int userId, int movieId) {
+        return movieRepository.isInWatchlist(userId, movieId);
+    }
+
+    public LiveData<Boolean> isInWatchedList(int userId, int movieId) {
+        return movieRepository.isInWatchedList(userId, movieId);
     }
 }

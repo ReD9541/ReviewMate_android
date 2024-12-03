@@ -52,12 +52,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@id/categorySpinner"
+                    app:layout_constraintEnd_toStartOf="@id/languageSpinner"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
                 <Spinner
-                    android:id="@+id/categorySpinner"
+                    android:id="@+id/languageSpinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

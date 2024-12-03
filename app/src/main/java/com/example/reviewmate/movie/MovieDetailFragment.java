@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MovieDetailFragment extends Fragment {
@@ -67,8 +68,9 @@ public class MovieDetailFragment extends Fragment {
             int movieId = getArguments().getInt("MOVIE_ID", -1);
             if (movieId != -1) {
                 observeMovieDetails(movieId);
-                observeMovieReviewsAndUsernames(movieId);
-                setupInteractions(movieId);
+                loadMovieReviews(movieId);
+                setupCheckboxInteractions(movieId);
+                setupReviewSubmission(movieId);
             }
         }
     }
@@ -100,17 +102,23 @@ public class MovieDetailFragment extends Fragment {
         movieDetailViewModel.getMovieDetails(movieId).observe(getViewLifecycleOwner(), this::populateMovieDetails);
     }
 
-    private void observeMovieReviewsAndUsernames(int movieId) {
+    private void loadMovieReviews(int movieId) {
         reviewViewModel.getReviewsWithUsernamesByMovieId(movieId).observe(getViewLifecycleOwner(), reviews -> {
             if (reviews != null) {
+                // Fetch usernames associated with the reviews
                 reviewViewModel.getUsernamesByMovieId(movieId).observe(getViewLifecycleOwner(), usernames -> {
                     if (usernames != null && usernames.size() == reviews.size()) {
                         reviewAdapter.submitList(reviews, usernames);
+                    } else {
+                        reviewAdapter.submitList(List.of(), List.of());
                     }
                 });
+            } else {
+                reviewAdapter.submitList(List.of(), List.of());
             }
         });
     }
+
 
     private void populateMovieDetails(Movie movie) {
         if (movie != null) {
@@ -160,8 +168,16 @@ public class MovieDetailFragment extends Fragment {
         return youtubeUrl;
     }
 
-    private void setupInteractions(int movieId) {
+    private void setupCheckboxInteractions(int movieId) {
         int userId = LoginFragment.loggedInUserID;
+
+        movieDetailViewModel.isMovieInWatchlist(userId, movieId).observe(getViewLifecycleOwner(), isInWatchlist -> {
+            watchlistCheckBox.setChecked(isInWatchlist != null && isInWatchlist);
+        });
+
+        movieDetailViewModel.isMovieInWatchedList(userId, movieId).observe(getViewLifecycleOwner(), isInWatchedList -> {
+            watchedCheckBox.setChecked(isInWatchedList != null && isInWatchedList);
+        });
 
         watchlistCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -179,27 +195,38 @@ public class MovieDetailFragment extends Fragment {
                 Toast.makeText(requireContext(), "Marked as Watched", Toast.LENGTH_SHORT).show();
             } else {
                 movieDetailViewModel.removeFromWatchedList(userId, movieId);
-                Toast.makeText(requireContext(), "Unmarked as Watched", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Removed from Watched List", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setupReviewSubmission(int movieId) {
+        int userId = LoginFragment.loggedInUserID;
 
         getView().findViewById(R.id.submitReviewButton).setOnClickListener(v -> {
             String reviewText = reviewEditText.getText().toString().trim();
             float rating = ratingBar.getRating();
 
             if (!reviewText.isEmpty() && rating > 0) {
-                Review review = new Review();
-                review.setMovieId(movieId);
-                review.setUserId(userId);
-                review.setReviewText(reviewText);
-                review.setRating((int) rating);
-                review.setReviewDate(getCurrentDate());
+                reviewViewModel.hasReviewed(userId, movieId).observe(getViewLifecycleOwner(), hasReviewed -> {
+                    if (hasReviewed != null && hasReviewed) {
+                        Toast.makeText(requireContext(), "You have already reviewed this movie.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Review review = new Review();
+                        review.setMovieId(movieId);
+                        review.setUserId(userId);
+                        review.setReviewText(reviewText);
+                        review.setRating((int) rating);
+                        review.setReviewDate(getCurrentDate());
 
-                reviewViewModel.submitReview(review);
-                Toast.makeText(requireContext(), "Review submitted!", Toast.LENGTH_SHORT).show();
+                        reviewViewModel.submitReview(review);
+                        Toast.makeText(requireContext(), "Review submitted!", Toast.LENGTH_SHORT).show();
 
-                reviewEditText.setText("");
-                ratingBar.setRating(5);
+                        reviewEditText.setText("");
+                        ratingBar.setRating(5);
+                        loadMovieReviews(movieId);
+                    }
+                });
             } else {
                 Toast.makeText(requireContext(), "Please provide a rating and review text.", Toast.LENGTH_SHORT).show();
             }

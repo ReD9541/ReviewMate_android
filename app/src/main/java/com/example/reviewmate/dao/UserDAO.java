@@ -34,4 +34,11 @@ public interface UserDAO {
 
     @Query("SELECT * FROM userlogin WHERE email = :email")
     LiveData<User> findByEmail(String email);
+
+    @Query("UPDATE userinfo SET fname = :firstName, lname = :lastName, bio = :bio, address = :address WHERE user_id = :userId")
+    int updateUserProfile(int userId, String firstName, String lastName, String bio, String address);
+
+    @Query("UPDATE userlogin SET password = :newPassword WHERE id = :userId")
+    int updateUserPassword(int userId, String newPassword);
 }
+

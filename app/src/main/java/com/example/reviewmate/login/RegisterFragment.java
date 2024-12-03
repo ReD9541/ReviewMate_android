@@ -45,12 +45,10 @@ public class RegisterFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
-        // Set up back button navigation
         binding.registerButtonBack.setOnClickListener(v -> {
             navigateBackToLogin();
         });
 
-        // Handle Android's back button press
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

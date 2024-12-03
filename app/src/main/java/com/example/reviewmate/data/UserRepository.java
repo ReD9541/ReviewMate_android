@@ -1,8 +1,11 @@
 package com.example.reviewmate.data;
 
+import static com.example.reviewmate.data.ReviewMateRoomDatabase.databaseWriteExecutor;
+
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.reviewmate.dao.MovieDAO;
 import com.example.reviewmate.dao.ReviewsDAO;
@@ -15,7 +18,7 @@ import com.example.reviewmate.model.Userinfo;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-
+import java.util.concurrent.Executors;
 public class UserRepository {
     private final UserDAO userDAO;
     private final UserinfoDAO userinfoDAO;
@@ -29,7 +32,7 @@ public class UserRepository {
         userinfoDAO = db.userinfoDAO();
         movieDAO = db.movieDAO();
         reviewsDAO = db.reviewsDAO();
-        executorService = ReviewMateRoomDatabase.databaseWriteExecutor;
+        executorService = databaseWriteExecutor;
     }
 
     // Insert user and userinfo
@@ -113,5 +116,23 @@ public class UserRepository {
 
     public LiveData<List<String>> getMovienamesByUserId(int user_id) {
         return reviewsDAO.getMovienamesByUserId(user_id);
+    }
+
+    public LiveData<Boolean> updateUserProfile(int userId, String firstName, String lastName, String bio, String address) {
+        MutableLiveData<Boolean> result = new MutableLiveData<>();
+        executorService.execute(() -> {
+            int rowsUpdated = userDAO.updateUserProfile(userId, firstName, lastName, bio, address);
+            result.postValue(rowsUpdated > 0);
+        });
+        return result;
+    }
+
+    public LiveData<Boolean> updateUserPassword(int userId, String newPassword) {
+        MutableLiveData<Boolean> result = new MutableLiveData<>();
+        executorService.execute(() -> {
+            int rowsUpdated = userDAO.updateUserPassword(userId, newPassword);
+            result.postValue(rowsUpdated > 0);
+        });
+        return result;
     }
 }

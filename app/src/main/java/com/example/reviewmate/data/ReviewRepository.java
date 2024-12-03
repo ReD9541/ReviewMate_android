@@ -41,4 +41,9 @@ public class ReviewRepository {
         executorService.execute(() -> reviewsDAO.deleteReviewById(reviewId));
     }
 
+    public LiveData<Boolean> hasReviewed(int userId, int movieId) {
+        return reviewsDAO.hasReviewed(userId, movieId);
+    }
+
+
 }

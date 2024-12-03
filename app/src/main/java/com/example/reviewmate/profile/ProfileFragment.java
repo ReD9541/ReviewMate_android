@@ -73,7 +73,15 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.logoutButton.setOnClickListener(v -> handleLogout());
+        binding.editProfileButton.setOnClickListener(v -> sendToEditProfile());
     }
+
+    private void sendToEditProfile() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("USER_DETAILS", sharedViewModel.getUserId().getValue());
+        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_editProfileFragment, bundle);
+    }
+
 
     private void populateUserInfo() {
         if (LoginFragment.loggedInUserEmail != null && LoginFragment.loggedInUserName != null) {
@@ -170,6 +178,7 @@ public class ProfileFragment extends Fragment {
         NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_loginFragment);
         Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void onDestroyView() {

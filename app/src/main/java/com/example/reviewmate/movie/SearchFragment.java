@@ -1,6 +1,7 @@
 package com.example.reviewmate.movie;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.reviewmate.adapters.MovieRecyclerViewAdapter;
 import com.example.reviewmate.databinding.SearchFragmentBinding;
 import com.example.reviewmate.model.Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
@@ -45,13 +47,13 @@ public class SearchFragment extends Fragment {
         binding.searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchMovies(query, getSelectedGenre(), getSelectedCategory());
+                searchMovies(query, getSelectedGenre(), getSelectedLanguage());
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchMovies(newText, getSelectedGenre(), getSelectedCategory());
+                searchMovies(newText, getSelectedGenre(), getSelectedLanguage());
                 return true;
             }
         });
@@ -64,26 +66,30 @@ public class SearchFragment extends Fragment {
     }
 
     private void setupFilters() {
-        ArrayAdapter<String> genreAdapter = new ArrayAdapter<>(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                searchViewModel.getGenres()
-        );
-        genreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.genreSpinner.setAdapter(genreAdapter);
+        searchViewModel.getGenres().observe(getViewLifecycleOwner(), genres -> {
+            List<String> genreOptions = new ArrayList<>();
+            genreOptions.add("All");
+            genreOptions.addAll(genres);
 
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                searchViewModel.getLanguages()
-        );
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.categorySpinner.setAdapter(categoryAdapter);
+            ArrayAdapter<String> genreAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, genreOptions);
+            genreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            binding.genreSpinner.setAdapter(genreAdapter);
+        });
+
+        searchViewModel.getLanguages().observe(getViewLifecycleOwner(), languages -> {
+            List<String> languageOptions = new ArrayList<>();
+            languageOptions.add("All");
+            languageOptions.addAll(languages);
+
+            ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, languageOptions);
+            categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            binding.languageSpinner.setAdapter(categoryAdapter);
+        });
 
         AdapterView.OnItemSelectedListener filterListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                searchMovies(binding.searchView.getQuery().toString(), getSelectedGenre(), getSelectedCategory());
+                searchMovies(binding.searchView.getQuery().toString(), getSelectedGenre(), getSelectedLanguage());
             }
 
             @Override
@@ -92,26 +98,34 @@ public class SearchFragment extends Fragment {
         };
 
         binding.genreSpinner.setOnItemSelectedListener(filterListener);
-        binding.categorySpinner.setOnItemSelectedListener(filterListener);
+        binding.languageSpinner.setOnItemSelectedListener(filterListener);
     }
 
     private void searchMovies(String query, String genre, String language) {
+        if ("All".equals(genre)) genre = "";
+        if ("All".equals(language)) language = "";
+
+        Log.d("SearchFragment", "Searching with query: " + query + ", genre: " + genre + ", language: " + language);
+
         searchViewModel.searchMovies(query, genre, language).observe(getViewLifecycleOwner(), movies -> {
-            if (movies != null) {
+            if (movies != null && !movies.isEmpty()) {
+                Log.d("SearchFragment", "Movies found: " + movies.size());
                 adapter.submitList(movies);
             } else {
+                Log.d("SearchFragment", "No movies found");
                 adapter.submitList(List.of());
             }
         });
     }
+
 
     private String getSelectedGenre() {
         Object selectedItem = binding.genreSpinner.getSelectedItem();
         return selectedItem != null ? selectedItem.toString() : "";
     }
 
-    private String getSelectedCategory() {
-        Object selectedItem = binding.categorySpinner.getSelectedItem();
+    private String getSelectedLanguage() {
+        Object selectedItem = binding.languageSpinner.getSelectedItem();
         return selectedItem != null ? selectedItem.toString() : "";
     }
 

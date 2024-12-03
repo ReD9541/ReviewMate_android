@@ -30,4 +30,10 @@ public class ReviewViewModel extends AndroidViewModel {
     public void submitReview(Review review) {
         reviewRepository.addReview(review);
     }
+
+    public LiveData<Boolean> hasReviewed(int userId, int movieId) {
+        return reviewRepository.hasReviewed(userId, movieId);
+    }
+
+
 }

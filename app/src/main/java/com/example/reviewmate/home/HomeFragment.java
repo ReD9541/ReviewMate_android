@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -38,14 +37,8 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar = view.findViewById(R.id.homeToolbar);
-        ImageButton profileButton = toolbar.findViewById(R.id.profileButton);
-        profileButton.setOnClickListener(v ->
-                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_profileFragment)
-        );
-
+        setupToolbar(view);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
         setupRecyclerViews();
 
         homeViewModel.getTopRatedMovies().observe(getViewLifecycleOwner(), movies -> {
@@ -57,22 +50,29 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void setupToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.homeToolbar);
+        ImageButton profileButton = toolbar.findViewById(R.id.profileButton);
+        profileButton.setOnClickListener(v ->
+                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_profileFragment)
+        );
+    }
+
     private void setupRecyclerViews() {
-        // Top Rated Movies RecyclerView
-        topRatedAdapter = new MovieRecyclerViewAdapter(movie -> navigateToMovieDetail(movie));
+        // Set up Top Rated Movies RecyclerView
+        topRatedAdapter = new MovieRecyclerViewAdapter(this::navigateToMovieDetail);
         binding.topRatedMoviesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false)
         );
         binding.topRatedMoviesRecyclerView.setAdapter(topRatedAdapter);
 
-        // Latest Movies RecyclerView
-        latestAdapter = new MovieRecyclerViewAdapter(movie -> navigateToMovieDetail(movie));
+        // Set up Latest Movies RecyclerView
+        latestAdapter = new MovieRecyclerViewAdapter(this::navigateToMovieDetail);
         binding.latestMoviesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false)
         );
         binding.latestMoviesRecyclerView.setAdapter(latestAdapter);
     }
-
 
     private void navigateToMovieDetail(Movie movie) {
         Bundle bundle = new Bundle();

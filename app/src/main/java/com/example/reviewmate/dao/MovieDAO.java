@@ -66,10 +66,38 @@ public interface MovieDAO {
     LiveData<List<Movie>> searchMovies(String query, String genre, String language);
 
     @Query("SELECT DISTINCT genre FROM movie")
-
-    List<String> getAllGenres();
+    LiveData<List<String>> getAllGenres();
 
     @Query("SELECT DISTINCT language FROM movie")
-    List<String> getAllLanguages();
-    }
+    LiveData<List<String>> getAllLanguages();
+
+    @Query("SELECT * FROM movie WHERE title LIKE :query")
+    LiveData<List<Movie>> searchMoviesByName(String query);
+
+    @Query("SELECT * FROM movie WHERE title LIKE :query AND genre = :genre")
+    LiveData<List<Movie>> searchMoviesByNameAndGenre(String query, String genre);
+
+    @Query("SELECT * FROM movie WHERE title LIKE :query AND language = :language")
+    LiveData<List<Movie>> searchMoviesByNameAndLanguage(String query, String language);
+
+    @Query("SELECT * FROM movie WHERE title LIKE :query AND genre = :genre AND language = :language")
+    LiveData<List<Movie>> searchMoviesByAllFilters(String query, String genre, String language);
+
+    @Query("SELECT EXISTS(SELECT 1 FROM watchlist WHERE user_id = :userId AND movie_id = :movieId)")
+    LiveData<Boolean> isMovieInWatchlist(int userId, int movieId);
+
+    @Query("SELECT EXISTS(SELECT 1 FROM movies_watched WHERE user_id = :userId AND movie_id = :movieId)")
+    LiveData<Boolean> isMovieInWatchedList(int userId, int movieId);
+
+    @Query("SELECT EXISTS(SELECT 1 FROM watchlist WHERE user_id = :userId AND movie_id = :movieId)")
+    LiveData<Boolean> isInWatchlist(int userId, int movieId);
+
+    @Query("SELECT EXISTS(SELECT 1 FROM movies_watched WHERE user_id = :userId AND movie_id = :movieId)")
+    LiveData<Boolean> isInWatchedList(int userId, int movieId);
+
+    @Query("SELECT EXISTS(SELECT 1 FROM reviews WHERE user_id = :userId AND movie_id = :movieId)")
+    LiveData<Boolean> hasReviewed(int userId, int movieId);
+
+}
+
 

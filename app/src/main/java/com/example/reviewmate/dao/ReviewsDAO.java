@@ -38,4 +38,7 @@ public interface ReviewsDAO {
     @Query("SELECT movie.title FROM reviews INNER JOIN movie ON reviews.movie_id = movie.movie_id WHERE reviews.user_id = :userId ORDER BY review_date DESC")
     LiveData<List<String>> getMovienamesByUserId(int userId);
 
+    @Query("SELECT EXISTS(SELECT 1 FROM reviews WHERE user_id = :userId AND movie_id = :movieId)")
+    LiveData<Boolean> hasReviewed(int userId, int movieId);
+
 }

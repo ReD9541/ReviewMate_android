@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_profileFragment_to_searchFragment2"
             app:destination="@id/searchFragment2" />
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment2"
+            app:destination="@id/editProfileFragment" />
     </fragment>
 
     <fragment
@@ -80,11 +83,6 @@
             android:id="@+id/action_movieDetailFragment_to_searchFragment2"
             app:destination="@id/searchFragment2" />
     </fragment>
-    <fragment
-        android:id="@+id/addMovieFragment"
-        android:name="com.example.reviewmate.movie.AddMovieFragment"
-        android:label="add_movie_fragment"
-        tools:layout="@layout/add_movie_fragment" />
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.reviewmate.profile.EditProfileFragment"

@@ -67,16 +67,48 @@ public class MovieRepository {
         return dateFormat.format(new Date());
     }
 
-    public LiveData<List<Movie>> searchMovies(String query, String genre, String language) {
-        return movieDAO.searchMovies("%" + query + "%", genre, language);
-    }
-
-    public List<String> getAllGenres() {
+    public LiveData<List<String>> getAllGenres() {
         return movieDAO.getAllGenres();
     }
 
-    public List<String> getAllLanguages() {
+    public LiveData<List<String>> getAllLanguages() {
         return movieDAO.getAllLanguages();
     }
+
+    public LiveData<List<Movie>> searchMovies(String query, String genre, String language) {
+        query = "%" + query + "%";
+
+        if (genre.isEmpty() && language.isEmpty()) {
+            return movieDAO.searchMoviesByName(query);
+        } else if (genre.isEmpty()) {
+            return movieDAO.searchMoviesByNameAndLanguage(query, language);
+        } else if (language.isEmpty()) {
+            return movieDAO.searchMoviesByNameAndGenre(query, genre);
+        } else {
+            return movieDAO.searchMoviesByAllFilters(query, genre, language);
+        }
+
+    }
+
+    public LiveData<Boolean> isMovieInWatchlist(int userId, int movieId) {
+        return movieDAO.isMovieInWatchlist(userId, movieId);
+    }
+
+    public LiveData<Boolean> isMovieInWatchedList(int userId, int movieId) {
+        return movieDAO.isMovieInWatchedList(userId, movieId);
+    }
+
+    public LiveData<Boolean> isInWatchlist(int userId, int movieId) {
+        return movieDAO.isInWatchlist(userId, movieId);
+    }
+
+    public LiveData<Boolean> isInWatchedList(int userId, int movieId) {
+        return movieDAO.isInWatchedList(userId, movieId);
+    }
+
+    public LiveData<Boolean> hasReviewed(int userId, int movieId) {
+        return movieDAO.hasReviewed(userId, movieId);
+    }
+
 
 }

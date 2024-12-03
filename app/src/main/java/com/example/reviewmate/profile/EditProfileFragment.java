@@ -1,66 +1,127 @@
 package com.example.reviewmate.profile;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.reviewmate.R;
+import com.example.reviewmate.databinding.EditProfileFragmentBinding;
+import com.example.reviewmate.model.Userinfo;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EditProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private EditProfileFragmentBinding binding;
+    private SharedViewModel viewModel;
+    private Userinfo loggedInUser;
 
     public EditProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EditProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EditProfileFragment newInstance(String param1, String param2) {
-        EditProfileFragment fragment = new EditProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.edit_profile_fragment, container, false);
+        binding = EditProfileFragmentBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+
+        if (getArguments() != null) {
+            loggedInUser = (Userinfo) getArguments().getSerializable("USER_DETAILS");
+        }
+
+        if (loggedInUser != null) {
+            loadUserData(loggedInUser);
+        } else {
+            Toast.makeText(requireContext(), "Error: User data not available", Toast.LENGTH_SHORT).show();
+        }
+
+        binding.editProfileSaveButton.setOnClickListener(v -> saveProfileChanges());
+        binding.updatePasswordButton.setOnClickListener(v -> updatePassword());
+    }
+
+    private void loadUserData(Userinfo user) {
+        binding.editFirstNameEditText.setText(user.getFirstName());
+        binding.editLastNameEditText.setText(user.getLastName());
+        binding.editBioEditText.setText(user.getBio());
+        binding.editAddressEditText.setText(user.getAddress());
+        binding.profileEditImageView.setImageResource(R.drawable.ic_profile_placeholder);
+    }
+
+    private void saveProfileChanges() {
+        if (loggedInUser == null) {
+            Toast.makeText(requireContext(), "Error: User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String firstName = binding.editFirstNameEditText.getText().toString().trim();
+        String lastName = binding.editLastNameEditText.getText().toString().trim();
+        String bio = binding.editBioEditText.getText().toString().trim();
+        String address = binding.editAddressEditText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName)) {
+            Toast.makeText(requireContext(), "First name and last name cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        viewModel.updateUserProfile(loggedInUser.getUserId(), firstName, lastName, bio, address).observe(getViewLifecycleOwner(), success -> {
+            if (success) {
+                Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                loggedInUser.setFirstName(firstName);
+                loggedInUser.setLastName(lastName);
+                loggedInUser.setBio(bio);
+                loggedInUser.setAddress(address);
+            } else {
+                Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updatePassword() {
+        if (loggedInUser == null) {
+            Toast.makeText(requireContext(), "Error: User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String newPassword = binding.editPasswordEditText.getText().toString().trim();
+        String confirmPassword = binding.editConfirmPasswordEditText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(confirmPassword)) {
+            Toast.makeText(requireContext(), "Password fields cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            Toast.makeText(requireContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        viewModel.updateUserPassword(loggedInUser.getUserId(), newPassword).observe(getViewLifecycleOwner(), success -> {
+            if (success) {
+                Toast.makeText(requireContext(), "Password updated successfully", Toast.LENGTH_SHORT).show();
+                binding.editPasswordEditText.setText("");
+                binding.editConfirmPasswordEditText.setText("");
+            } else {
+                Toast.makeText(requireContext(), "Failed to update password", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
