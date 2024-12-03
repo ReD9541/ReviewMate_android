@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background=""
     tools:context=".login.LoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,14 +30,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".15" />
+            app:layout_constraintGuide_percent=".65" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@id/guideline"
@@ -87,7 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:contentDescription="Enter your email address"
-                        android:drawableStart="@drawable/baseline_assignment_ind_24"
+                        android:drawableStart="@drawable/ic_mail"
                         android:drawablePadding="8dp"
                         android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -108,7 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:contentDescription="Enter your password"
-                        android:drawableStart="@drawable/baseline_add_moderator_24"
+                        android:drawableStart="@drawable/ic_password"
                         android:drawablePadding="8dp"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword|textNoSuggestions"
@@ -116,12 +117,23 @@
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:text="Don't have an account?"
+                    app:layout_constraintBottom_toBottomOf="@+id/loginSignUpButton"
+                    app:layout_constraintEnd_toStartOf="@+id/loginSignUpButton"
+                    app:layout_constraintTop_toTopOf="@+id/loginSignUpButton"
+                    app:layout_constraintVertical_bias="0.529" />
+
                 <Button
                     android:id="@+id/loginSignUpButton"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
                     android:text="Sign Up"
                     app:layout_constraintEnd_toEndOf="parent"

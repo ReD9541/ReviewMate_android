@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.reviewmate.profile.profileFragment"
+        android:name="com.example.reviewmate.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/profile_fragment">
         <action
@@ -48,12 +48,10 @@
             app:destination="@id/loginFragment" />
     </fragment>
 
-
-    <!-- Login Fragment -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.reviewmate.login.LoginFragment"
-        android:label="Login Fragment"
+        android:label="Home"
         tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -86,5 +84,10 @@
             android:id="@+id/action_editProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.example.reviewmate.movie.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/search_fragment" />
 
 </navigation>
