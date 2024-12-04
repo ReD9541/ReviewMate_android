@@ -98,17 +98,9 @@ public class MovieRepository {
         return movieDAO.isMovieInWatchedList(userId, movieId);
     }
 
-    public LiveData<Boolean> isInWatchlist(int userId, int movieId) {
-        return movieDAO.isInWatchlist(userId, movieId);
-    }
-
-    public LiveData<Boolean> isInWatchedList(int userId, int movieId) {
-        return movieDAO.isInWatchedList(userId, movieId);
-    }
 
     public LiveData<Boolean> hasReviewed(int userId, int movieId) {
         return movieDAO.hasReviewed(userId, movieId);
     }
-
 
 }

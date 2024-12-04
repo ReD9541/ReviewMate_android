@@ -51,11 +51,4 @@ public class MovieDetailViewModel extends AndroidViewModel {
         movieRepository.addToWatchedList(userId, movieId);
     }
 
-    public LiveData<Boolean> isInWatchlist(int userId, int movieId) {
-        return movieRepository.isInWatchlist(userId, movieId);
-    }
-
-    public LiveData<Boolean> isInWatchedList(int userId, int movieId) {
-        return movieRepository.isInWatchedList(userId, movieId);
-    }
 }

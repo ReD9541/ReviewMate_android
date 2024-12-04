@@ -2,6 +2,7 @@ package com.example.reviewmate;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setupWindowInsets();
         setupBottomNavigation();
     }
-
+// Handles window insets to manage system bars and IME (keyboard) padding.
+// doesn't work, need to implement something better so the keyboard doesn't cover the UI elements and push the bottom navbar up
     private void setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             int systemBarsInsetBottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+// Configures the BottomNavigationView with navigation components.
 
     private void setupBottomNavigation() {
         bottomNavigationView = findViewById(R.id.bottom_navigation);

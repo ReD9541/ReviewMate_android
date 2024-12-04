@@ -20,12 +20,16 @@ public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecycl
     private final List<Review> reviewList = new ArrayList<>();
     private final List<String> usernameList = new ArrayList<>();
 
+    // Creates a new ViewHolder instance for a review item layout.
+
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
         return new ReviewViewHolder(view);
     }
+
+    // Binds the review and username data to the ViewHolder at a specific position.
 
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
@@ -35,6 +39,8 @@ public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecycl
             holder.bind(review, username);
         }
     }
+
+    // Returns the total number of reviews in the list.
 
     @Override
     public int getItemCount() {
@@ -50,6 +56,7 @@ public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecycl
         }
         notifyDataSetChanged();
     }
+    // ViewHolder manages individual review item views and binds data to them.
 
     static class ReviewViewHolder extends RecyclerView.ViewHolder {
 
@@ -65,6 +72,7 @@ public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecycl
             reviewDateTextView = itemView.findViewById(R.id.reviewDateTextView);
             reviewTextView = itemView.findViewById(R.id.reviewTextView);
         }
+        // Binds review data and username to the ViewHolder UI elements.
 
         void bind(Review review, String username) {
             usernameTextView.setText(username);

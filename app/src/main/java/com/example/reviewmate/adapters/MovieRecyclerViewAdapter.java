@@ -18,10 +18,12 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
     private final List<Movie> movieList = new ArrayList<>();
     private final OnMovieClickListener onMovieClickListener;
 
+    // Interface to handle click events on movie items.
     public interface OnMovieClickListener {
         void onMovieClick(Movie movie);
     }
 
+    // Constructor to initialize the adapter with a click listener.
     public MovieRecyclerViewAdapter(OnMovieClickListener listener) {
         this.onMovieClickListener = listener;
     }
@@ -34,6 +36,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
         }
     }
 
+    // Creates and returns a MovieViewHolder for a new list item.
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,6 +45,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
         return new MovieViewHolder(binding);
     }
 
+    // Binds data to the MovieViewHolder at the specified position.
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         if (position < movieList.size()) {
@@ -50,6 +54,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
         }
     }
 
+    // Returns the size of the movie list.
     @Override
     public int getItemCount() {
         return movieList.size();

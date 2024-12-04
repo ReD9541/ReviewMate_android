@@ -17,7 +17,6 @@ import java.util.concurrent.Executors;
 public class LoginViewModel extends AndroidViewModel {
 
     private final UserRepository userRepository;
-    private final LiveData<List<User>> allUsers;
     private final MutableLiveData<Boolean> loginStatus = new MutableLiveData<>();
     private final MutableLiveData<Integer> loggedInUserId = new MutableLiveData<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -25,7 +24,6 @@ public class LoginViewModel extends AndroidViewModel {
     public LoginViewModel(@NonNull Application application) {
         super(application);
         userRepository = new UserRepository(application);
-        allUsers = userRepository.getAllUsers();
     }
 
     public LiveData<Boolean> getLoginStatus() {
@@ -51,10 +49,6 @@ public class LoginViewModel extends AndroidViewModel {
         });
     }
 
-    public void clearLoginStatus() {
-        loginStatus.postValue(null);
-        loggedInUserId.postValue(null);
-    }
 
     public void insert(User user) {
         executorService.execute(() -> userRepository.insertUser(user));
@@ -72,19 +66,4 @@ public class LoginViewModel extends AndroidViewModel {
         return userRepository.findByEmail(email);
     }
 
-    public LiveData<List<User>> getAllUsers() {
-        return allUsers;
-    }
-
-    public LiveData<User> checkLogin(String email, String password) {
-        final String normalizedEmail = email != null ? email.trim().toLowerCase() : null;
-        final String trimmedPassword = password != null ? password.trim() : null;
-
-        MutableLiveData<User> result = new MutableLiveData<>();
-        executorService.execute(() -> {
-            User user = userRepository.getUserByEmailAndPassword(normalizedEmail, trimmedPassword);
-            result.postValue(user);
-        });
-        return result;
-    }
 }

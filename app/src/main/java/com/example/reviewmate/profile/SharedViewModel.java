@@ -33,10 +33,6 @@ public class SharedViewModel extends AndroidViewModel {
         userId.setValue(null);
     }
 
-    public LiveData<User> getUserProfile(int userId) {
-        return userRepository.getUserById(userId);
-    }
-
     public LiveData<Boolean> updateUserProfile(int userId, String firstName, String lastName, String bio, String address) {
         return userRepository.updateUserProfile(userId, firstName, lastName, bio, address);
     }

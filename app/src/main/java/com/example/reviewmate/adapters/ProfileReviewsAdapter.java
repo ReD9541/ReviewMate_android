@@ -17,6 +17,8 @@ public class ProfileReviewsAdapter extends RecyclerView.Adapter<ProfileReviewsAd
     private final List<Review> reviews = new ArrayList<>();
     private final List<String> movieNames = new ArrayList<>();
 
+    // Updates the adapter with a new list of reviews and their corresponding movie names.
+
     public void submitList(List<Review> reviewList, List<String> movieNameList) {
         reviews.clear();
         movieNames.clear();
@@ -50,6 +52,7 @@ public class ProfileReviewsAdapter extends RecyclerView.Adapter<ProfileReviewsAd
     public int getItemCount() {
         return reviews.size();
     }
+// Creates a new ReviewViewHolder for the profile reviews list.
 
     static class ReviewViewHolder extends RecyclerView.ViewHolder {
         private final ProfileReviewBinding binding;
@@ -58,6 +61,7 @@ public class ProfileReviewsAdapter extends RecyclerView.Adapter<ProfileReviewsAd
             super(binding.getRoot());
             this.binding = binding;
         }
+// Binds the review and movie name data to the ViewHolder for a specific position.
 
         public void bind(Review review, String movieName) {
             binding.movienameTextView.setText(movieName);
