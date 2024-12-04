@@ -26,6 +26,4 @@ public interface UserinfoDAO {
     @Query("SELECT * FROM userinfo WHERE user_id = :userId")
     LiveData<Userinfo> getUserinfoByUserId(int userId);
 
-    @Query("SELECT * FROM userinfo")
-    LiveData<List<Userinfo>> getAllUserinfo();
 }

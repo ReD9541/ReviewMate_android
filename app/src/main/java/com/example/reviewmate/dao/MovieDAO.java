@@ -27,12 +27,6 @@ public interface MovieDAO {
     @Delete
     void delete(Movie movie);
 
-    @Query("SELECT * FROM movie WHERE movie_id = :movieId")
-    Movie getMovieById(int movieId);
-
-    @Query("SELECT * FROM movie")
-    List<Movie> getAllMovies();
-
     @Query("SELECT * FROM movie ORDER BY imdb_rating DESC LIMIT 4")
     LiveData<List<Movie>> getTopRatedMovies();
 
@@ -61,9 +55,6 @@ public interface MovieDAO {
 
     @Query("DELETE FROM movies_watched WHERE movie_id = :movieId AND user_id = :userId")
     void removeFromWatchedList(int movieId, int userId);
-
-    @Query("SELECT * FROM movie WHERE title LIKE :query AND genre LIKE :genre AND language LIKE :language")
-    LiveData<List<Movie>> searchMovies(String query, String genre, String language);
 
     @Query("SELECT DISTINCT genre FROM movie")
     LiveData<List<String>> getAllGenres();

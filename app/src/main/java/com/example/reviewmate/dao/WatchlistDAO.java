@@ -26,20 +26,12 @@ public interface WatchlistDAO {
     @Delete
     void delete(Watchlist watchlist);
 
-    @Query("SELECT * FROM watchlist WHERE user_id = :userId")
-    List<Watchlist> getWatchlistByUser(int userId);
-
-    @Query("SELECT * FROM watchlist")
-    List<Watchlist> getAllWatchlist();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addToWatchlist(Watchlist watchlist);
 
     @Query("DELETE FROM watchlist WHERE user_id = :userId AND movie_id = :movieId")
     void removeFromWatchlist(int userId, int movieId);
-
-    @Query("SELECT * FROM watchlist WHERE user_id = :userId")
-    LiveData<List<Watchlist>> getWatchlistByUserId(int userId);
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM movie INNER JOIN watchlist ON movie.movie_id = watchlist.movie_id WHERE watchlist.user_id = :userId")

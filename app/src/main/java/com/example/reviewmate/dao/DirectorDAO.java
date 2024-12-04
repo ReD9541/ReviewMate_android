@@ -22,9 +22,4 @@ public interface DirectorDAO {
     @Delete
     void delete(Director director);
 
-    @Query("SELECT * FROM directors WHERE director_id = :directorId")
-    Director getDirectorById(int directorId);
-
-    @Query("SELECT * FROM directors")
-    List<Director> getAllDirectors();
 }

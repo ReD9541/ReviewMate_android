@@ -22,9 +22,4 @@ public interface ActorDAO {
     @Delete
     void delete(Actor actor);
 
-    @Query("SELECT * FROM actors WHERE actor_id = :actorId")
-    Actor getActorById(int actorId);
-
-    @Query("SELECT * FROM actors")
-    List<Actor> getAllActors();
 }

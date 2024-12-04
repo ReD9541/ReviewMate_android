@@ -29,17 +29,12 @@ public interface MoviesWatchedDAO {
     @Query("SELECT * FROM movies_watched WHERE user_id = :userId")
     List<MoviesWatched> getMoviesWatchedByUser(int userId);
 
-    @Query("SELECT * FROM movies_watched")
-    List<MoviesWatched> getAllMoviesWatched();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addMovieToWatchedList(MoviesWatched moviesWatched);
 
     @Query("DELETE FROM movies_watched WHERE user_id = :userId AND movie_id = :movieId")
     void removeMovieFromWatchedList(int userId, int movieId);
-
-    @Query("SELECT * FROM movies_watched WHERE user_id = :userId")
-    LiveData<List<MoviesWatched>> getWatchedListByUserId(int userId);
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM movie INNER JOIN movies_watched ON movie.movie_id = movies_watched.movie_id WHERE movies_watched.user_id = :userId")

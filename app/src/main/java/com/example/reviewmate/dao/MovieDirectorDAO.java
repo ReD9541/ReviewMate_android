@@ -22,9 +22,4 @@ public interface MovieDirectorDAO {
     @Delete
     void delete(MovieDirector movieDirector);
 
-    @Query("SELECT director_id FROM movie_directors WHERE movie_id = :movieId")
-    List<Integer> getDirectorsForMovie(int movieId);
-
-    @Query("SELECT movie_id FROM movie_directors WHERE director_id = :directorId")
-    List<Integer> getMoviesForDirector(int directorId);
 }
