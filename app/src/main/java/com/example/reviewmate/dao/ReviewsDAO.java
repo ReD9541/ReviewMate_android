@@ -41,4 +41,6 @@ public interface ReviewsDAO {
     @Query("SELECT EXISTS(SELECT 1 FROM reviews WHERE user_id = :userId AND movie_id = :movieId)")
     LiveData<Boolean> hasReviewed(int userId, int movieId);
 
+    //This class helps initialize my reviews table and helps me retrieve data for all the reviews
+
 }

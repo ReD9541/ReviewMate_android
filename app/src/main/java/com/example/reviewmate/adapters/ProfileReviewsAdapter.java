@@ -52,7 +52,7 @@ public class ProfileReviewsAdapter extends RecyclerView.Adapter<ProfileReviewsAd
     public int getItemCount() {
         return reviews.size();
     }
-// Creates a new ReviewViewHolder for the profile reviews list.
+    // Creates a new ReviewViewHolder for the profile reviews list.
 
     static class ReviewViewHolder extends RecyclerView.ViewHolder {
         private final ProfileReviewBinding binding;
@@ -61,7 +61,7 @@ public class ProfileReviewsAdapter extends RecyclerView.Adapter<ProfileReviewsAd
             super(binding.getRoot());
             this.binding = binding;
         }
-// Binds the review and movie name data to the ViewHolder for a specific position.
+    // Binds the review and movie name data to the ViewHolder for a specific position.
 
         public void bind(Review review, String movieName) {
             binding.movienameTextView.setText(movieName);

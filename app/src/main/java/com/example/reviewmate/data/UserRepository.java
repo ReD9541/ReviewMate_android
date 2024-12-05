@@ -33,6 +33,8 @@ public class UserRepository {
         movieDAO = db.movieDAO();
         reviewsDAO = db.reviewsDAO();
         executorService = databaseWriteExecutor;
+
+        //a constructor with DAO instances initialization
     }
 
     // Insert user and userinfo
@@ -60,14 +62,6 @@ public class UserRepository {
 
     public User getUserByEmailAndPassword(String email, String password) {
         return userDAO.getUserByEmailAndPassword(email, password);
-    }
-
-    public LiveData<User> getUserById(int userId) {
-        return userDAO.getUserById(userId);
-    }
-
-    public LiveData<List<User>> getAllUsers() {
-        return userDAO.getAllUsers();
     }
 
     public LiveData<User> findByEmail(String email) {
@@ -135,4 +129,6 @@ public class UserRepository {
         });
         return result;
     }
+
+        //this class helps me do all the data retrieving and writing for my Profile/home fragment
 }

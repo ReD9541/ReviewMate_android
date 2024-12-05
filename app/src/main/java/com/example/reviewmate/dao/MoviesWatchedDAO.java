@@ -26,17 +26,5 @@ public interface MoviesWatchedDAO {
     @Delete
     void delete(MoviesWatched moviesWatched);
 
-    @Query("SELECT * FROM movies_watched WHERE user_id = :userId")
-    List<MoviesWatched> getMoviesWatchedByUser(int userId);
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addMovieToWatchedList(MoviesWatched moviesWatched);
-
-    @Query("DELETE FROM movies_watched WHERE user_id = :userId AND movie_id = :movieId")
-    void removeMovieFromWatchedList(int userId, int movieId);
-
-    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("SELECT * FROM movie INNER JOIN movies_watched ON movie.movie_id = movies_watched.movie_id WHERE movies_watched.user_id = :userId")
-    LiveData<List<Movie>> getMoviesWatchedByUserId(int userId);
 }
+//This helps me initialize the database but doesn't have any function of it for now

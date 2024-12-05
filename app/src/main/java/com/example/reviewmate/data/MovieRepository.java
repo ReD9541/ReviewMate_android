@@ -19,13 +19,14 @@ public class MovieRepository {
 
     private final MovieDAO movieDAO;
     private final ExecutorService executorService;
-
+    //constructor for the movie repository
     public MovieRepository(Application application) {
         ReviewMateRoomDatabase db = ReviewMateRoomDatabase.getDatabase(application);
         movieDAO = db.movieDAO();
         executorService = ReviewMateRoomDatabase.databaseWriteExecutor;
     }
 
+    //to retrieve top rated movies from movieDAO to pass it
     public LiveData<List<Movie>> getTopRatedMovies() {
         return movieDAO.getTopRatedMovies();
     }
@@ -87,7 +88,7 @@ public class MovieRepository {
         } else {
             return movieDAO.searchMoviesByAllFilters(query, genre, language);
         }
-
+    //This query searches movie based on the queries , if the genres/language is empty or not
     }
 
     public LiveData<Boolean> isMovieInWatchlist(int userId, int movieId) {

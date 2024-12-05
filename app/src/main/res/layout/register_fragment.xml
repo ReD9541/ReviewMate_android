@@ -61,7 +61,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/LoginText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Sign Up / Register"
@@ -82,7 +82,7 @@
                     android:src="@drawable/ic_profile_placeholder"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView3" />
+                    app:layout_constraintTop_toBottomOf="@id/LoginText" />
 
                 <Button
                     android:id="@+id/uploadProfilePictureButton"

@@ -25,5 +25,5 @@ public interface UserinfoDAO {
 
     @Query("SELECT * FROM userinfo WHERE user_id = :userId")
     LiveData<Userinfo> getUserinfoByUserId(int userId);
-
+//This helps me initialize the database and getUserinfoByUserId, helps me get user's detail for profile
 }

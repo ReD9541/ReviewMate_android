@@ -23,3 +23,4 @@ public interface MovieActorDAO {
     void delete(MovieActor movieActor);
 
 }
+//This helps me initialize the database but doesn't have any function of it for now

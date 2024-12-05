@@ -26,14 +26,5 @@ public interface WatchlistDAO {
     @Delete
     void delete(Watchlist watchlist);
 
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addToWatchlist(Watchlist watchlist);
-
-    @Query("DELETE FROM watchlist WHERE user_id = :userId AND movie_id = :movieId")
-    void removeFromWatchlist(int userId, int movieId);
-
-    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("SELECT * FROM movie INNER JOIN watchlist ON movie.movie_id = watchlist.movie_id WHERE watchlist.user_id = :userId")
-    LiveData<List<Movie>> getMoviesInWatchlist(int userId);
 }
+//This helps me initialize the database but doesn't have any function of it for now

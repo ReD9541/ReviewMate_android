@@ -45,5 +45,5 @@ public class ReviewRepository {
         return reviewsDAO.hasReviewed(userId, movieId);
     }
 
-
+//same as other repository to read/write data from and to the database
 }

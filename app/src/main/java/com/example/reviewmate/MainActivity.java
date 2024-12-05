@@ -24,25 +24,25 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        setupWindowInsets();
+//        setupWindowInsets();
         setupBottomNavigation();
     }
 // Handles window insets to manage system bars and IME (keyboard) padding.
 // doesn't work, need to implement something better so the keyboard doesn't cover the UI elements and push the bottom navbar up
-    private void setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            int systemBarsInsetBottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
-            int imeInsetBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
-
-            int bottomPadding = Math.max(systemBarsInsetBottom, imeInsetBottom);
-
-            if (bottomNavigationView != null) {
-                bottomNavigationView.setPadding(0, 0, 0, bottomPadding);
-            }
-
-            return insets;
-        });
-    }
+//    private void setupWindowInsets() {
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            int systemBarsInsetBottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
+//            int imeInsetBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+//
+//            int bottomPadding = Math.max(systemBarsInsetBottom, imeInsetBottom);
+//
+//            if (bottomNavigationView != null) {
+//                bottomNavigationView.setPadding(0, 0, 0, bottomPadding);
+//            }
+//
+//            return insets;
+//        });
+//    }
 
 // Configures the BottomNavigationView with navigation components.
 

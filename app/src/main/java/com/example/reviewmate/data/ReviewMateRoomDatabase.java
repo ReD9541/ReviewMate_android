@@ -146,3 +146,4 @@ public abstract class ReviewMateRoomDatabase extends RoomDatabase {
 
     }
 }
+        //I have this class to help me initialize the database, and initialize value in them

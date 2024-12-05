@@ -23,3 +23,4 @@ public interface DirectorDAO {
     void delete(Director director);
 
 }
+//This helps me initialize the database but doesn't have any function of it for now

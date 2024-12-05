@@ -80,15 +80,9 @@ public interface MovieDAO {
     @Query("SELECT EXISTS(SELECT 1 FROM movies_watched WHERE user_id = :userId AND movie_id = :movieId)")
     LiveData<Boolean> isMovieInWatchedList(int userId, int movieId);
 
-    @Query("SELECT EXISTS(SELECT 1 FROM watchlist WHERE user_id = :userId AND movie_id = :movieId)")
-    LiveData<Boolean> isInWatchlist(int userId, int movieId);
-
-    @Query("SELECT EXISTS(SELECT 1 FROM movies_watched WHERE user_id = :userId AND movie_id = :movieId)")
-    LiveData<Boolean> isInWatchedList(int userId, int movieId);
-
     @Query("SELECT EXISTS(SELECT 1 FROM reviews WHERE user_id = :userId AND movie_id = :movieId)")
     LiveData<Boolean> hasReviewed(int userId, int movieId);
 
 }
 
-
+//This helps me initialize the database it contains all the functions that I need to retrieve movie's details, check movie's details

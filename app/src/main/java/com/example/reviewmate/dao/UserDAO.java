@@ -41,4 +41,4 @@ public interface UserDAO {
     @Query("UPDATE userlogin SET password = :newPassword WHERE id = :userId")
     int updateUserPassword(int userId, String newPassword);
 }
-
+// This class helps me prepare the roomdatabase and has all the function for Login logic, and (update logic for editing user details)

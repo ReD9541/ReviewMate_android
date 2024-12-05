@@ -26,6 +26,7 @@ public class HomeFragment extends Fragment {
     private MovieRecyclerViewAdapter latestAdapter;
     private HomeViewModel homeViewModel;
 
+    //initializing the home fragment layout
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
+    //this class helps fill up info in the toolbar (my top text bar welcoming user), gets toprated movies, from the MovieRecyclerViewAdapter, and does the same fot the latest adapter
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
